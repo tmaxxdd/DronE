@@ -1,0 +1,57 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColorPrimary">@color/textColorPrimary</item>
+        <item name="android:textColorSecondary">@color/textColorSecondary</item>
+    </style>
+
+    <!-- Dark application theme. -->
+    <style name="AppTheme.Dark" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimaryInverse</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkInverse</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColorPrimary">@color/textColorPrimaryInverse</item>
+        <item name="android:textColorSecondary">@color/textColorSecondaryInverse</item>
+    </style>
+
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="TabIndicator" parent="Material.Widget.TabPageIndicator">
+        <item name="tpi_indicatorColor">@color/colorAccent</item>
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="tpi_mode">scroll</item>
+        <item name="tpi_tabRipple">@style/Material.Drawable.Ripple.Wave</item>
+        <item name="tpi_indicatorHeight">4dp</item>
+        <item name="tpi_tabPadding">16dp</item>
+        <item name="android:textAppearance">@style/TabText</item>
+    </style>
+
+    <style name="FAB_center">
+        <item name="fab_backgroundColor">@color/colorAccent</item>
+        <item name="fab_elevation">4dp</item>
+    </style>
+
+    <style name="TabText">
+        <item name="android:textColor">#DDD</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="switchStyled" parent="@style/Material.Widget.Switch">
+        <item name="sw_trackColor">@color/colorAccent</item>
+    </style>
+
+</resources>

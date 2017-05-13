@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">DronE</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_ekran_ladowania">Ekran_ladowania</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_maps">Map</string>
+</resources>

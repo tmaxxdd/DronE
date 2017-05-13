@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Base colors -->
+    <color name="colorPrimary">#FFFFFF</color>
+    <color name="colorPrimaryDark">#CFD8DC</color>
+    <color name="colorAccent">#08FF70</color>
+    <!-- Dark colors -->
+    <color name="colorPrimaryInverse">#212121</color>
+    <color name="colorPrimaryDarkInverse">#000000</color>
+
+    <!-- Text colors -->
+    <color name="textColorPrimary">#87000000</color>
+    <color name="textColorSecondary">#54000000</color>
+    <color name="textColorPrimaryInverse">#FFFFFF</color>
+    <color name="textColorSecondaryInverse">#70FFFFFF</color>
+
+    <color name="colorBackground">#303030</color>
+    <color name="white">#FFFFFF</color>
+</resources>
