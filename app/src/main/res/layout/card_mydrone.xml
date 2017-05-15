@@ -1,25 +1,46 @@
-<android.support.v7.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/card_mydrone_cardview"
     android:layout_width="match_parent"
-    android:layout_height="250dp"
-    android:layout_margin="16dp">
+    android:layout_height="wrap_content"
+    android:layout_margin="16dp"
+    app:cardBackgroundColor="?attr/colorPrimary">
 
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
         <ImageView
+            android:id="@+id/card_mydrone_imageview"
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:scaleType="centerCrop"/>
+            android:scaleType="centerCrop" />
 
         <TextView
+            android:id="@+id/card_mydrone_header"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/card_mydrone_imageview"
+            android:layout_marginBottom="16dp"
             android:layout_marginLeft="16dp"
-            android:layout_marginTop="16dp"
-            android:text="Hello World !" />
+            android:text="Demo Drone"
+            android:textColor="@color/textColorPrimaryInverse"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/card_mydrone_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/card_mydrone_header"
+            android:layout_margin="16dp"
+            android:maxLines="6"
+            android:text="@string/lorem_ipsum"
+            android:textColor="?android:textColorPrimary">
+
+
+        </TextView>
+
+
     </RelativeLayout>
 
 </android.support.v7.widget.CardView>
