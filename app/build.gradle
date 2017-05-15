@@ -1,4 +1,6 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.jakewharton.butterknife'
+apply plugin: 'me.tatarka.retrolambda'
 
 android {
     signingConfigs {
@@ -17,6 +19,10 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        compileOptions {
+            sourceCompatibility JavaVersion.VERSION_1_8
+            targetCompatibility JavaVersion.VERSION_1_8
+        }
     }
     buildTypes {
         release {
@@ -29,6 +35,8 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
 
+    compile files ('libs/gson-2.8.0.jar')
+
     //Design Dependencies
     compile 'com.android.support:mediarouter-v7:25.3.1'
     compile 'com.android.support:appcompat-v7:25.3.1'
@@ -37,8 +45,12 @@ dependencies {
     //on pre-lollipop devices
     compile 'com.github.rey5137:material:1.2.4'
     compile 'com.android.support:support-v4:25.3.1'
+    compile 'com.github.smart-fun:SmartFonts:1.0.2'
+    compile('com.mikepenz:materialdrawer:5.9.1@aar') {
+        transitive = true
+    }
+    compile 'com.squareup.picasso:picasso:2.5.2'
     //Import services for localization and maps
-    compile 'com.google.android.gms:play-services:10.2.4'
     compile 'com.google.android.gms:play-services-maps:10.2.4'
     compile 'com.google.android.gms:play-services-location:10.2.4'
     compile 'com.google.android.gms:play-services-identity:10.2.4'
@@ -47,7 +59,25 @@ dependencies {
     compile 'com.jakewharton:butterknife:8.5.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
 
-    compile 'com.github.mikepenz:MaterialDrawer:v5.9.1'
+
+    //Don't remove and keep up to date with support package version e.x. 25.3.1
+    //Without this line compile throws support-annotations error!
+    androidTestCompile 'com.android.support:support-annotations:25.3.1'
 
     testCompile 'junit:junit:4.12'
+
+    // Android runner and rules support
+    androidTestCompile 'com.android.support.test:runner:0.5'
+    androidTestCompile 'com.android.support.test:rules:0.5'
+
+    // Espresso support
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+
+    // add this for intent mocking support
+    androidTestCompile 'com.android.support.test.espresso:espresso-intents:2.2.2'
+
+    // add this for webview testing support
+    androidTestCompile 'com.android.support.test.espresso:espresso-web:2.2.2'
 }

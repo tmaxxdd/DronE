@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/colorBackground">
+
+    <fr.arnaudguyon.smartfontslib.FontTextView
+        android:id="@+id/splash_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="DronE"
+        android:textColor="@color/colorAccent"
+        android:textSize="48sp"
+        app:font="@string/fontTitle"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="152dp" />
+
+    <ImageView
+        android:id="@+id/splash_icon"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/drone_symbol"
+        android:contentDescription="image"
+        android:layout_below="@+id/splash_text"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="84dp" />
+
+    <TextView
+        android:id="@+id/splash_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorAccent"
+        android:text="@string/app_desciption_short"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="61dp" />
+
+    <TextView
+        android:id="@+id/splash_link"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorAccent"
+        android:text="@string/drone_team_link"
+        android:layout_alignTop="@+id/splash_description"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="28dp" />
+
+</RelativeLayout>

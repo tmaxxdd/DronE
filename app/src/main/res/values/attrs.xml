@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="themedMenuDrawable" format="reference"/>
+    <attr name="themedSunnyDrawable" format="reference"/>
+    <attr name="themedNightDrawable" format="reference"/>
+</resources>

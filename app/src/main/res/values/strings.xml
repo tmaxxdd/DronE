@@ -6,4 +6,9 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_maps">Map</string>
+
+    <!--Fonts-->
+    <string translatable="false" name="fontTitle">fonts/BioRhyme-Regular.ttf</string>
+    <string name="app_desciption_short" >Official app made for Drone Team Project</string>
+    <string name="drone_team_link">www.droneteamproject.eu</string>
 </resources>

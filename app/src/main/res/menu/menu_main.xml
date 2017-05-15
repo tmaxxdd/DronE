@@ -1,9 +1,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
         android:id="@+id/action_switch"
-        app:actionLayout="@layout/toolbar_switch_layout"
+        app:actionLayout="@layout/toolbar_layout"
         app:showAsAction="always" />
 </menu>

@@ -30,7 +30,7 @@ public class StatystykiFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View layout = inflater.inflate(R.layout.fragment_statystyki, container, false);
+        View layout = inflater.inflate(R.layout.card_mydrone, container, false);
         Toast.makeText(getActivity(), a, Toast.LENGTH_SHORT).show();
         // Inflate the layout for this fragment
         return layout;
