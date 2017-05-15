@@ -127,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
                             //startActivity(new Intent(this, ContactActivity.class));
                             break;
                         case 10:
-                            //startActivity(new Intent(this, AboutActivity.class));
+                            //startActivity(new Intent(this, AboutActivity.class));/
                             break;
                         case 13:
                             //startActivity(new Intent(this, CroatiaActivity.class));
