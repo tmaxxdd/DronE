@@ -19,7 +19,7 @@ public class ControlActivity extends Activity {
         themeManager = new MyThemeManager(this);
         themeManager.chooseTheme();
         setContentView(R.layout.control_layout);
-        //
+
     }
 
     @Override

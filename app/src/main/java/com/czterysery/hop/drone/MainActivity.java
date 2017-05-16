@@ -5,13 +5,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.czterysery.hop.drone.Adapters.MyDroneAdapter;
 import com.czterysery.hop.drone.Drone.ControlActivity;
 import com.czterysery.hop.drone.Drone.MapsActivity;
+import com.czterysery.hop.drone.Models.MyDrone;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mikepenz.materialdrawer.model.DividerDrawerItem;
@@ -19,12 +23,21 @@ import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.rey.material.widget.Switch;
 
+import java.util.ArrayList;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class MainActivity extends AppCompatActivity {
     public final static String TAG = "MainActivity";
     private MyThemeManager myThemeManager;
     private Toolbar toolbar;//Problem with menu icon with butterknife
     private View toolbarLayout;//Contains logo and switch
     private Drawer result;//Navigation drawer
+    @BindView(R2.id.main_recyclerview)
+    RecyclerView recyclerView;
+    private RecyclerView.Adapter adapter;
+    private ArrayList<MyDrone> drones = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,11 +47,74 @@ public class MainActivity extends AppCompatActivity {
         myThemeManager = new MyThemeManager(this);//Collision with rey's Theme Manager class
         myThemeManager.chooseTheme();//Automatically set light or dark
         setContentView(R.layout.activity_main);
+
         initializeToolbarLayout();
         initializeToolbar();
         initializeNavigationDrawer();
-        ///ButterKnife.bind(this);
+        ButterKnife.bind(this);
+    }
 
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        /*
+        for (int i = 0; i < 20; i++){
+            drones.add(new MyDrone("Demo drone",
+                    getResources().getString(R.string.lorem_ipsum),
+                    "https://pisces.bbystatic.com/BestBuy_US/images/products/5621/5621780_sd.jpg;maxHeight=460;maxWidth=460"));
+            adapter.notifyDataSetChanged();
+        }
+        */
+        // Create adapter passing in the sample user data
+        adapter = new MyDroneAdapter(this, drones);
+        // Attach the adapter to the recyclerview to populate items
+        recyclerView.setAdapter(adapter);
+        // Set layout manager to position the items
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        initializeToolbarSwitch();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        if (id == android.R.id.home) {
+            //Show drawer
+            if (result.isDrawerOpen())
+                result.closeDrawer();
+                else result.openDrawer();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    public static void restartActivity(Activity act){
+        Intent intent=new Intent();
+        intent.setClass(act, act.getClass());
+        ((Activity)act).startActivity(intent);
+        ((Activity)act).finish();
+    }
+
+    private void toast(String message) {
+        Toast.makeText(
+                this, message, Toast.LENGTH_SHORT).show();
     }
 
     private void initializeNavigationDrawer() {
@@ -151,53 +227,6 @@ public class MainActivity extends AppCompatActivity {
         if (myThemeManager.getTheme() == MyThemeManager.LIGHT_THEME)
             result.getActionBarDrawerToggle().setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp);
         else result.getActionBarDrawerToggle().setHomeAsUpIndicator(R.drawable.ic_menu_white_24dp);
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        initializeToolbarSwitch();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        if (id == android.R.id.home) {
-            //Show drawer
-            if (result.isDrawerOpen())
-                result.closeDrawer();
-                else result.openDrawer();
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    public static void restartActivity(Activity act){
-        Intent intent=new Intent();
-        intent.setClass(act, act.getClass());
-        ((Activity)act).startActivity(intent);
-        ((Activity)act).finish();
-    }
-
-    private void toast(String message) {
-        Toast.makeText(
-                this, message, Toast.LENGTH_SHORT).show();
     }
 
     private void initializeToolbarLayout() {
