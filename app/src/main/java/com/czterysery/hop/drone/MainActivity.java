@@ -3,6 +3,7 @@ package com.czterysery.hop.drone;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,6 +17,7 @@ import com.czterysery.hop.drone.Adapters.MyDroneAdapter;
 import com.czterysery.hop.drone.Drone.ControlActivity;
 import com.czterysery.hop.drone.Drone.MapsActivity;
 import com.czterysery.hop.drone.Models.MyDrone;
+import com.github.fabtransitionactivity.SheetLayout;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mikepenz.materialdrawer.model.DividerDrawerItem;
@@ -27,24 +29,31 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements SheetLayout.OnFabAnimationEndListener {
     public final static String TAG = "MainActivity";
+    private static final int REQUEST_CODE = 1;
     private MyThemeManager myThemeManager;
     private Toolbar toolbar;//Problem with menu icon with butterknife
     private View toolbarLayout;//Contains logo and switch
     private Drawer result;//Navigation drawer
-    @BindView(R2.id.main_recyclerview)
-    RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private ArrayList<MyDrone> drones = new ArrayList<>();
+    @BindView(R2.id.main_recyclerview)
+    RecyclerView recyclerView;
+    @BindView(R2.id.main_bottom_sheet)
+    SheetLayout sheetLayout;
+    @BindView(R2.id.main_fab)
+    FloatingActionButton fab;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //Setup app layout by color mode
         //Order methods below is very important!
-        myThemeManager = new MyThemeManager(this);//Collision with rey's Theme Manager class
+        myThemeManager = new MyThemeManager(this);
         myThemeManager.chooseTheme();//Automatically set light or dark
         setContentView(R.layout.activity_main);
 
@@ -52,8 +61,10 @@ public class MainActivity extends AppCompatActivity {
         initializeToolbar();
         initializeNavigationDrawer();
         ButterKnife.bind(this);
+        //Butterknife things under bind
+        sheetLayout.setFab(fab);
+        sheetLayout.setFabAnimationEndListener(this);
     }
-
 
     @Override
     protected void onStart() {
@@ -115,6 +126,25 @@ public class MainActivity extends AppCompatActivity {
     private void toast(String message) {
         Toast.makeText(
                 this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    @OnClick(R.id.main_fab)
+    void onFabClick() {
+        sheetLayout.expandFab();
+    }
+
+    @Override
+    public void onFabAnimationEnd() {
+        Intent intent = new Intent(this, AddDroneActivity.class);
+        startActivityForResult(intent, REQUEST_CODE);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE) {
+            sheetLayout.contractFab();
+        }
     }
 
     private void initializeNavigationDrawer() {

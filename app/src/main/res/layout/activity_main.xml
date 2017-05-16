@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:fitsSystemWindows="true"
     tools:context="com.czterysery.hop.drone.MainActivity"
     android:background="?attr/colorPrimaryDark">
@@ -13,24 +14,32 @@
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary" />
 
-    <!--
-    <android.support.design.widget.FloatingActionButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:layout_margin="16dp"
-        android:src="@drawable/ic_add_white_24dp"
-        app:layout_anchor="@id/main_recyclerview"
-        app:layout_anchorGravity="bottom|right|end"
-        app:fab_backgroundColor="?attr/colorAccent"/>
-
-        -->
-    
     <android.support.v7.widget.RecyclerView
         android:id="@+id/main_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/main_toolbar"/>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/main_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="16dp"
+        android:layout_marginRight="16dp"
+        android:src="@drawable/ic_add_white_24dp"
+        app:borderWidth="0dp"
+        app:fabSize="normal"
+        app:rippleColor="@color/colorAccent"/>
+
+    <com.github.fabtransitionactivity.SheetLayout
+        android:id="@+id/main_bottom_sheet"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="bottom"
+        app:ft_container_gravity="center"
+        app:ft_color="?attr/colorPrimary" />
 
 
 </RelativeLayout>
