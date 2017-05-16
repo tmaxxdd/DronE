@@ -17,6 +17,7 @@ import com.czterysery.hop.drone.Adapters.MyDroneAdapter;
 import com.czterysery.hop.drone.Drone.ControlActivity;
 import com.czterysery.hop.drone.Drone.MapsActivity;
 import com.czterysery.hop.drone.Models.MyDrone;
+import com.czterysery.hop.drone.More.SettingsActivity;
 import com.github.fabtransitionactivity.SheetLayout;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
@@ -224,7 +225,7 @@ public class MainActivity extends AppCompatActivity implements SheetLayout.OnFab
                             //startActivity(new Intent(this, StatisticsActivity.class));
                             break;
                         case 7:
-                            //startActivity(new Intent(this, SettingsActivity.class));
+                            startActivity(new Intent(this, SettingsActivity.class));
                             break;
                         case 8:
                             //startActivity(new Intent(this, OpenSourceActivity.class));

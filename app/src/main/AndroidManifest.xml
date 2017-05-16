@@ -44,6 +44,7 @@
             android:label="@string/title_activity_maps" />
         <activity android:name=".Drone$ControlActivity" />
         <activity android:name=".AddDroneActivity"/>
+        <activity android:name=".More.SettingsActivity"/>
     </application>
 
 </manifest>
