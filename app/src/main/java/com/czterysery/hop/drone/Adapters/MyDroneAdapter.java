@@ -62,7 +62,7 @@ public class MyDroneAdapter extends RecyclerView.Adapter<MyDroneAdapter.ViewHold
 
         public ViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(activity, itemView);
+            ButterKnife.bind(this, itemView);
         }
     }
 }

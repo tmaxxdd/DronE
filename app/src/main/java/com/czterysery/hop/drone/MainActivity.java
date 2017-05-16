@@ -59,20 +59,20 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        /*
-        for (int i = 0; i < 20; i++){
-            drones.add(new MyDrone("Demo drone",
-                    getResources().getString(R.string.lorem_ipsum),
-                    "https://pisces.bbystatic.com/BestBuy_US/images/products/5621/5621780_sd.jpg;maxHeight=460;maxWidth=460"));
-            adapter.notifyDataSetChanged();
-        }
-        */
         // Create adapter passing in the sample user data
         adapter = new MyDroneAdapter(this, drones);
         // Attach the adapter to the recyclerview to populate items
         recyclerView.setAdapter(adapter);
         // Set layout manager to position the items
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        for (int i = 0; i < 20; i++){
+            drones.add(new MyDrone(
+                    "https://pisces.bbystatic.com/BestBuy_US/images/products/5621/5621780_sd.jpg;maxHeight=460;maxWidth=460",
+                    "Demo drone" + "#" +i,
+                    getResources().getString(R.string.lorem_ipsum)));
+            adapter.notifyDataSetChanged();
+        }
 
         initializeToolbarSwitch();
     }
