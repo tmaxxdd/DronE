@@ -2,6 +2,7 @@ package com.czterysery.hop.drone;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
@@ -228,7 +229,7 @@ public class MainActivity extends AppCompatActivity implements SheetLayout.OnFab
                             startActivity(new Intent(this, SettingsActivity.class));
                             break;
                         case 8:
-                            //startActivity(new Intent(this, OpenSourceActivity.class));
+                            openGithub();
                             break;
                         case 9:
                             //startActivity(new Intent(this, ContactActivity.class));
@@ -303,6 +304,12 @@ public class MainActivity extends AppCompatActivity implements SheetLayout.OnFab
                 restartActivity(this);
             }
         });
+    }
+
+    private void openGithub() {
+        String github = getResources().getString(R.string.github_link);
+        Intent intent= new Intent(Intent.ACTION_VIEW, Uri.parse(github));
+        startActivity(intent);
     }
 
 }
