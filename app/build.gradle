@@ -53,6 +53,7 @@ dependencies {
     compile('com.mikepenz:materialdrawer:5.9.1@aar') {
         transitive = true
     }
+    compile 'com.ms-square:expandableTextView:0.1.4'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.github.coyarzun89:fabtransitionactivity:0.2.0'
     //Import services for localization and maps

@@ -41,13 +41,22 @@
             android:text="Drone Team"
             android:textColor="?android:textColorPrimary"/>
 
+            <ImageView
+                android:id="@+id/about_drone_team_image"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:src="@drawable/logo_drone_team"
+                android:layout_below="@+id/about_drone_team_header"
+                android:layout_margin="16dp"
+                android:layout_marginTop="0dp"/>
+
         <TextView
             android:id="@+id/about_drone_team_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/about_drone_team"
             android:padding="16dp"
-            android:layout_below="@+id/about_drone_team_header"
+            android:layout_below="@+id/about_drone_team_image"
             android:textColor="?android:textColorPrimary"/>
 
         </RelativeLayout>

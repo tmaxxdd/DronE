@@ -46,6 +46,7 @@
         <activity android:name=".AddDroneActivity"/>
         <activity android:name=".More.SettingsActivity"/>
         <activity android:name=".More.AboutActivity"/>
+        <activity android:name=".Countries.CountryActivity"/>
     </application>
 
 </manifest>

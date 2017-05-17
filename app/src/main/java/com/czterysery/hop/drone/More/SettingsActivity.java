@@ -9,6 +9,7 @@ import android.view.MenuItem;
 
 import com.czterysery.hop.drone.MyThemeManager;
 import com.czterysery.hop.drone.R;
+import com.ms.square.android.expandabletextview.ExpandableTextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

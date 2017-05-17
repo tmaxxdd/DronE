@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.czterysery.hop.drone.Adapters.MyDroneAdapter;
+import com.czterysery.hop.drone.Countries.CountryActivity;
 import com.czterysery.hop.drone.Drone.ControlActivity;
 import com.czterysery.hop.drone.Drone.MapsActivity;
 import com.czterysery.hop.drone.Models.MyDrone;
@@ -242,7 +243,7 @@ public class MainActivity extends AppCompatActivity implements SheetLayout.OnFab
                             //startActivity(new Intent(this, CroatiaActivity.class));
                             break;
                         case 14:
-                            //startActivity(new Intent(this, PolandActivity.class));
+                            startActivity(new Intent(this, CountryActivity.class));
                             break;
                         case 15:
                             //startActivity(new Intent(this, SloveniaActivity.class));
