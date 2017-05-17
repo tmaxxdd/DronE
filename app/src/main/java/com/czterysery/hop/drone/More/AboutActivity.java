@@ -1,5 +1,6 @@
 package com.czterysery.hop.drone.More;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
@@ -14,12 +15,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * Created by tmax0 on 16.05.2017.
+ * Created by tmax0 on 17.05.2017.
  */
 
-public class SettingsActivity extends AppCompatActivity {
-    private MyThemeManager myThemeManager;
-    @BindView(R.id.settings_toolbar)
+public class AboutActivity extends AppCompatActivity {
+    MyThemeManager myThemeManager;
+    @BindView(R.id.about_toolbar)
     Toolbar toolbar;
 
     @Override
@@ -27,7 +28,7 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         myThemeManager = new MyThemeManager(this);
         myThemeManager.chooseTheme();//Automatically set light or dark
-        setContentView(R.layout.settings_layout);
+        setContentView(R.layout.about_layout);
         ButterKnife.bind(this);
         initializeToolbar();
     }
@@ -50,7 +51,7 @@ public class SettingsActivity extends AppCompatActivity {
 
             actionBar = getSupportActionBar();
             if (actionBar != null) {
-                actionBar.setTitle("Settings");
+                actionBar.setTitle("About");
                 actionBar.setDisplayHomeAsUpEnabled(true);
                 actionBar.setDisplayShowHomeEnabled(true);
                 actionBar.setDisplayShowTitleEnabled(true);

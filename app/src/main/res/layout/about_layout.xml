@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="?attr/colorPrimaryDark">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/about_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary" />
+
+    <ScrollView
+        android:id="@+id/about_scrollview"
+        android:layout_below="@id/about_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/about_drone_team_card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        app:cardBackgroundColor="?attr/colorPrimary">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/about_drone_team_header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"
+            android:padding="16dp"
+            android:text="Drone Team"
+            android:textColor="?android:textColorPrimary"/>
+
+        <TextView
+            android:id="@+id/about_drone_team_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/about_drone_team"
+            android:padding="16dp"
+            android:layout_below="@+id/about_drone_team_header"
+            android:textColor="?android:textColorPrimary"/>
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/about_app_card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:layout_below="@id/about_drone_team_card"
+        app:cardBackgroundColor="?attr/colorPrimary">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/about_app_header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="24sp"
+                android:padding="16dp"
+                android:text="Application"
+                android:textColor="?android:textColorPrimary"/>
+
+            <TextView
+                android:id="@+id/about_app_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/about_drone_team"
+                android:padding="16dp"
+                android:layout_below="@+id/about_app_header"
+                android:textColor="?android:textColorPrimary"/>
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/about_me_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:layout_below="@id/about_app_card"
+                app:cardBackgroundColor="?attr/colorPrimary">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/about_me_header"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="24sp"
+                        android:padding="16dp"
+                        android:text="About me"
+                        android:textColor="?android:textColorPrimary"/>
+
+                    <TextView
+                        android:id="@+id/about_me_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/about_drone_team"
+                        android:padding="16dp"
+                        android:layout_below="@+id/about_me_header"
+                        android:textColor="?android:textColorPrimary"/>
+
+                </RelativeLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/about_source_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:layout_below="@id/about_me_card"
+                app:cardBackgroundColor="?attr/colorPrimary">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/about_source_header"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="24sp"
+                        android:padding="16dp"
+                        android:text="Open Source"
+                        android:textColor="?android:textColorPrimary"/>
+
+                    <TextView
+                        android:id="@+id/about_source_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/about_drone_team"
+                        android:padding="16dp"
+                        android:textColor="?android:textColorPrimary"
+                        android:layout_below="@+id/about_source_header"/>
+
+                </RelativeLayout>
+
+            </android.support.v7.widget.CardView>
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+</RelativeLayout>

@@ -45,6 +45,7 @@
         <activity android:name=".Drone$ControlActivity" />
         <activity android:name=".AddDroneActivity"/>
         <activity android:name=".More.SettingsActivity"/>
+        <activity android:name=".More.AboutActivity"/>
     </application>
 
 </manifest>
