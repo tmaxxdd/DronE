@@ -1,36 +1,340 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="?attr/colorPrimaryDark">
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/add_drone_toolbar"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary" />
+        android:layout_height="match_parent"
 
-        <EditText
-            android:layout_below="@id/add_drone_toolbar"
+        android:background="?attr/colorPrimaryDark">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/add_drone_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/add_drone_edittext"
-            android:textSize="24sp"
-            android:text="Simple drone name"
-            android:textColor="?attr/colorPrimary"
-            android:layout_margin="16dp" />
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary" />
 
-        <com.rey.material.widget.EditText
-            android:id="@+id/editText"
-            app:et_inputId="@+id/add_drone_edittext"
-            app:et_labelEnable="true"
-            app:et_helper="Helper"
-            app:et_labelTextColor="@color/colorAccent"
-            app:et_dividerColor="@color/colorAccent"
-            app:et_labelTextSize="14sp"
-            app:et_supportMaxChars="24"
+        <RelativeLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_width="wrap_content" />
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true">
 
-</RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/add_drone_image_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/add_drone_imageview"
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp"
+                    android:background="@color/md_grey_400"
+                    />
+
+                <com.rey.material.widget.Button
+                    android:id="@+id/add_drone_files_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerHorizontal="false"
+                    android:layout_centerInParent="false"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="16dp"
+                    android:text="Files" />
+
+                <com.rey.material.widget.Button
+                    android:id="@+id/add_drone_camera_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="false"
+                    android:layout_centerInParent="false"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="16dp"
+                    android:text="Camera" />
+
+            </RelativeLayout>
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/add_drone_name_edittext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/add_drone_image_layout"
+                android:layout_marginBottom="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="96dp"
+                android:hint="Drone name"
+                android:textSize="24sp"
+                app:met_baseColor="?android:textColorPrimary"
+                app:met_floatingLabel="highlight"
+                app:met_floatingLabelText="Put short drone name"
+                app:met_maxCharacters="24"
+                app:met_primaryColor="@color/colorAccent"
+                app:met_textColor="?android:textColorPrimary" />
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/add_drone_telemetry_edittext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/add_drone_name_edittext"
+                android:layout_margin="16dp"
+                android:textSize="14sp"
+                android:hint="Drone telemetry"
+                app:met_floatingLabel="highlight"
+                app:met_floatingLabelText="Describe your telemetry"
+                app:met_maxCharacters="300"
+                app:met_textColor="?android:textColorPrimary"
+                app:met_baseColor="?android:textColorPrimary"
+                app:met_primaryColor="@color/colorAccent"/>
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/add_drone_battery_edittext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/add_drone_telemetry_edittext"
+                android:layout_margin="16dp"
+                android:textSize="14sp"
+                android:hint="Drone battery"
+                app:met_floatingLabel="highlight"
+                app:met_floatingLabelText="Describe your battery"
+                app:met_maxCharacters="300"
+                app:met_textColor="?android:textColorPrimary"
+                app:met_baseColor="?android:textColorPrimary"
+                app:met_primaryColor="@color/colorAccent"/>
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/add_drone_motors_edittext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/add_drone_battery_edittext"
+                android:layout_margin="16dp"
+                android:textSize="14sp"
+                android:hint="Drone motors"
+                app:met_floatingLabel="highlight"
+                app:met_floatingLabelText="Describe your motors"
+                app:met_maxCharacters="300"
+                app:met_textColor="?android:textColorPrimary"
+                app:met_baseColor="?android:textColorPrimary"
+                app:met_primaryColor="@color/colorAccent"/>
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/add_drone_buzzer_edittext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/add_drone_motors_edittext"
+                android:layout_margin="16dp"
+                android:textSize="14sp"
+                android:hint="Drone description"
+                app:met_floatingLabel="highlight"
+                app:met_floatingLabelText="Describe your buzzer"
+                app:met_maxCharacters="300"
+                app:met_textColor="?android:textColorPrimary"
+                app:met_baseColor="?android:textColorPrimary"
+                app:met_primaryColor="@color/colorAccent"/>
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/add_drone_bluetooth_edittext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/add_drone_buzzer_edittext"
+                android:layout_margin="16dp"
+                android:textSize="14sp"
+                android:hint="Drone bluetooth"
+                app:met_floatingLabel="highlight"
+                app:met_floatingLabelText="Describe your bluetooth"
+                app:met_maxCharacters="300"
+                app:met_textColor="?android:textColorPrimary"
+                app:met_baseColor="?android:textColorPrimary"
+                app:met_primaryColor="@color/colorAccent"/>
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/add_drone_wifi_edittext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/add_drone_bluetooth_edittext"
+                android:layout_margin="16dp"
+                android:textSize="14sp"
+                android:hint="Drone wifi"
+                app:met_floatingLabel="highlight"
+                app:met_floatingLabelText="Describe your wifi"
+                app:met_maxCharacters="300"
+                app:met_textColor="?android:textColorPrimary"
+                app:met_baseColor="?android:textColorPrimary"
+                app:met_primaryColor="@color/colorAccent"/>
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/add_drone_gps_edittext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/add_drone_wifi_edittext"
+                android:layout_margin="16dp"
+                android:textSize="14sp"
+                android:hint="Drone gps"
+                app:met_floatingLabel="highlight"
+                app:met_floatingLabelText="Describe your gps"
+                app:met_maxCharacters="300"
+                app:met_textColor="?android:textColorPrimary"
+                app:met_baseColor="?android:textColorPrimary"
+                app:met_primaryColor="@color/colorAccent"/>
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/add_drone_compass_edittext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/add_drone_gps_edittext"
+                android:layout_margin="16dp"
+                android:textSize="14sp"
+                android:hint="Drone compass"
+                app:met_floatingLabel="highlight"
+                app:met_floatingLabelText="Describe your compass"
+                app:met_maxCharacters="300"
+                app:met_textColor="?android:textColorPrimary"
+                app:met_baseColor="?android:textColorPrimary"
+                app:met_primaryColor="@color/colorAccent"/>
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/add_drone_receiver_edittext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/add_drone_compass_edittext"
+                android:layout_margin="16dp"
+                android:textSize="14sp"
+                android:hint="Drone receiver"
+                app:met_floatingLabel="highlight"
+                app:met_floatingLabelText="Describe your receiver"
+                app:met_maxCharacters="300"
+                app:met_textColor="?android:textColorPrimary"
+                app:met_baseColor="?android:textColorPrimary"
+                app:met_primaryColor="@color/colorAccent"/>
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/add_drone_transmitter_edittext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/add_drone_receiver_edittext"
+                android:layout_margin="16dp"
+                android:textSize="14sp"
+                android:hint="Drone transmitter"
+                app:met_floatingLabel="highlight"
+                app:met_floatingLabelText="Describe your transmitter"
+                app:met_maxCharacters="300"
+                app:met_textColor="?android:textColorPrimary"
+                app:met_baseColor="?android:textColorPrimary"
+                app:met_primaryColor="@color/colorAccent"/>
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/add_drone_camera_edittext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/add_drone_transmitter_edittext"
+                android:layout_margin="16dp"
+                android:textSize="14sp"
+                android:hint="Drone camera"
+                app:met_floatingLabel="highlight"
+                app:met_floatingLabelText="Describe your camera"
+                app:met_maxCharacters="300"
+                app:met_textColor="?android:textColorPrimary"
+                app:met_baseColor="?android:textColorPrimary"
+                app:met_primaryColor="@color/colorAccent"/>
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/add_drone_pwm_edittext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/add_drone_camera_edittext"
+                android:layout_margin="16dp"
+                android:textSize="14sp"
+                android:hint="Drone power module"
+                app:met_floatingLabel="highlight"
+                app:met_floatingLabelText="Describe your power module"
+                app:met_maxCharacters="300"
+                app:met_textColor="?android:textColorPrimary"
+                app:met_baseColor="?android:textColorPrimary"
+                app:met_primaryColor="@color/colorAccent"/>
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/add_drone_switch_edittext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/add_drone_pwm_edittext"
+                android:layout_margin="16dp"
+                android:textSize="14sp"
+                android:hint="Drone switches"
+                app:met_floatingLabel="highlight"
+                app:met_floatingLabelText="Describe your switches"
+                app:met_maxCharacters="300"
+                app:met_textColor="?android:textColorPrimary"
+                app:met_baseColor="?android:textColorPrimary"
+                app:met_primaryColor="@color/colorAccent"/>
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/add_drone_battery_warner_edittext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/add_drone_switch_edittext"
+                android:layout_margin="16dp"
+                android:textSize="14sp"
+                android:hint="Drone battery warner"
+                app:met_floatingLabel="highlight"
+                app:met_floatingLabelText="Describe your battery warner"
+                app:met_maxCharacters="300"
+                app:met_textColor="?android:textColorPrimary"
+                app:met_baseColor="?android:textColorPrimary"
+                app:met_primaryColor="@color/colorAccent"/>
+
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/add_drone_gimbal_edittext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/add_drone_battery_warner_edittext"
+                android:layout_margin="16dp"
+                android:textSize="14sp"
+                android:hint="Drone gimbal"
+                app:met_floatingLabel="highlight"
+                app:met_floatingLabelText="Describe your gimbal"
+                app:met_maxCharacters="300"
+                app:met_textColor="?android:textColorPrimary"
+                app:met_baseColor="?android:textColorPrimary"
+                app:met_primaryColor="@color/colorAccent"/>
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/add_drone_controller_edittext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/add_drone_gimbal_edittext"
+                android:layout_margin="16dp"
+                android:textSize="14sp"
+                android:hint="Drone controller"
+                app:met_floatingLabel="highlight"
+                app:met_floatingLabelText="Describe your drone"
+                app:met_maxCharacters="300"
+                app:met_textColor="?android:textColorPrimary"
+                app:met_baseColor="?android:textColorPrimary"
+                app:met_primaryColor="@color/colorAccent"/>
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/add_drone_description_edittext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/add_drone_controller_edittext"
+                android:layout_margin="16dp"
+                android:textSize="14sp"
+                android:hint="Drone description"
+                app:met_floatingLabel="highlight"
+                app:met_floatingLabelText="Describe your drone"
+                app:met_maxCharacters="300"
+                app:met_textColor="?android:textColorPrimary"
+                app:met_baseColor="?android:textColorPrimary"
+                app:met_primaryColor="@color/colorAccent"/>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    </ScrollView>

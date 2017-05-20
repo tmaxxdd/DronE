@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.czterysery.hop.drone.Models.MyDrone;
+import com.czterysery.hop.drone.MyDroneOld;
 import com.czterysery.hop.drone.R;
 import com.squareup.picasso.Picasso;
 
@@ -22,9 +23,9 @@ import butterknife.ButterKnife;
 
 public class MyDroneAdapter extends RecyclerView.Adapter<MyDroneAdapter.ViewHolder> {
     private Activity activity;
-    private ArrayList<MyDrone> drones = new ArrayList<>();
+    private ArrayList<MyDroneOld> drones = new ArrayList<>();
 
-    public MyDroneAdapter(Activity activity, ArrayList<MyDrone> drones) {
+    public MyDroneAdapter(Activity activity, ArrayList<MyDroneOld> drones) {
         this.activity = activity;
         this.drones = drones;
     }

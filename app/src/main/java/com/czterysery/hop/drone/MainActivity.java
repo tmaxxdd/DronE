@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements SheetLayout.OnFab
     private View toolbarLayout;//Contains logo and switch
     private Drawer result;//Navigation drawer
     private RecyclerView.Adapter adapter;
-    private ArrayList<MyDrone> drones = new ArrayList<>();
+    private ArrayList<MyDroneOld> drones = new ArrayList<>();
     @BindView(R2.id.main_recyclerview)
     RecyclerView recyclerView;
     @BindView(R2.id.main_bottom_sheet)
@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity implements SheetLayout.OnFab
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         for (int i = 0; i < 20; i++){
-            drones.add(new MyDrone(
+            drones.add(new MyDroneOld(
                     "https://pisces.bbystatic.com/BestBuy_US/images/products/5621/5621780_sd.jpg;maxHeight=460;maxWidth=460",
                     "Demo drone" + "#" +i,
                     getResources().getString(R.string.lorem_ipsum)));
@@ -219,7 +219,7 @@ public class MainActivity extends AppCompatActivity implements SheetLayout.OnFab
                             toast("Welcome in project!");
                             break;
                         case 2:
-                            startActivity(new Intent(this, MapsActivity.class));
+                            //startActivity(new Intent(this, MapsActivity.class));
                             break;
                         case 3:
                             startActivity(new Intent(this, ControlActivity.class));
