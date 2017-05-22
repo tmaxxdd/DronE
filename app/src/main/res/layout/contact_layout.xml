@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:background="?attr/colorPrimaryDark">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/contact_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary" />
+
+    <TextView
+        android:id="@+id/contact_contact_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Contact"
+        android:textSize="48sp"
+        android:layout_margin="16dp"
+        android:layout_below="@id/contact_toolbar"
+        android:textColor="?android:textColorPrimary"/>
+
+    <TextView
+        android:id="@+id/contact_contact_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/contact_contact_view"
+        android:layout_margin="16dp"
+        android:text="@string/contact_text"
+        android:textColor="?android:textColorPrimary"/>
+
+    <TextView
+        android:id="@+id/contact_debugging_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Debugging"
+        android:textSize="24sp"
+        android:layout_margin="16dp"
+        android:layout_below="@id/contact_contact_text"
+        android:textColor="?android:textColorPrimary"/>
+
+    <TextView
+        android:id="@+id/contact_debugging_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/contact_debugging_view"
+        android:layout_marginLeft="16dp"
+        android:text="com.czterysery@gmail.com"
+        android:textColor="@color/colorAccent" />
+
+    <TextView
+        android:id="@+id/contact_github_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Github"
+        android:textSize="24sp"
+        android:layout_margin="16dp"
+        android:layout_below="@id/contact_debugging_text"
+        android:textColor="?android:textColorPrimary"/>
+
+    <TextView
+        android:id="@+id/contact_github_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/contact_github_view"
+        android:layout_marginLeft="16dp"
+        android:text="https://github.com/tmaxxdd/DronE"
+        android:textColor="@color/colorAccent" />
+
+    <TextView
+        android:id="@+id/contact_to_me_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Write to me"
+        android:textSize="24sp"
+        android:layout_margin="16dp"
+        android:layout_below="@id/contact_github_text"
+        android:textColor="?android:textColorPrimary"/>
+
+    <TextView
+        android:id="@+id/contact_to_me_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/contact_to_me_view"
+        android:layout_marginLeft="16dp"
+        android:text="tmax0135@gmail.com"
+        android:textColor="@color/colorAccent" />
+
+    <TextView
+        android:id="@+id/contact_drone_team_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Drone Team"
+        android:textSize="24sp"
+        android:layout_margin="16dp"
+        android:layout_below="@id/contact_to_me_text"
+        android:textColor="?android:textColorPrimary"/>
+
+    <TextView
+        android:id="@+id/contact_drone_team_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/contact_drone_team_view"
+        android:layout_marginLeft="16dp"
+        android:text="http://projectdroneteam.eu"
+        android:textColor="@color/colorAccent" />
+
+
+
+</RelativeLayout>

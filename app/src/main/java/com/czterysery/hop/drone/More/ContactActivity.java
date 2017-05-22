@@ -1,4 +1,4 @@
-package com.czterysery.hop.drone.Drone;
+package com.czterysery.hop.drone.More;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,39 +12,26 @@ import com.czterysery.hop.drone.R;
 import com.czterysery.hop.drone.R2;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
- * Created by tmax0 on 15.05.2017.
+ * Created by tmax0 on 21.05.2017.
  */
 
-public class ControlActivity extends AppCompatActivity {
+public class ContactActivity extends AppCompatActivity {
     private MyThemeManager myThemeManager;
-    @BindView(R2.id.control_toolbar)
+    @BindView(R2.id.contact_toolbar)
     Toolbar toolbar;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         myThemeManager = new MyThemeManager(this);
-        myThemeManager.chooseTheme();
-        setContentView(R.layout.control_layout);
+        myThemeManager.chooseTheme();//Automatically set light or dark
+        setContentView(R.layout.contact_layout);
+        ButterKnife.bind(this);
         initializeToolbar();
 
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
     }
 
     @Override
@@ -65,7 +52,7 @@ public class ControlActivity extends AppCompatActivity {
 
             actionBar = getSupportActionBar();
             if (actionBar != null) {
-                actionBar.setTitle("Control");
+                actionBar.setTitle("Contact");
                 actionBar.setDisplayHomeAsUpEnabled(true);
                 actionBar.setDisplayShowHomeEnabled(true);
                 actionBar.setDisplayShowTitleEnabled(true);

@@ -20,6 +20,7 @@ import com.czterysery.hop.drone.Drone.ControlActivity;
 import com.czterysery.hop.drone.Drone.MapsActivity;
 import com.czterysery.hop.drone.Models.MyDrone;
 import com.czterysery.hop.drone.More.AboutActivity;
+import com.czterysery.hop.drone.More.ContactActivity;
 import com.czterysery.hop.drone.More.SettingsActivity;
 import com.github.fabtransitionactivity.SheetLayout;
 import com.mikepenz.materialdrawer.Drawer;
@@ -219,7 +220,7 @@ public class MainActivity extends AppCompatActivity implements SheetLayout.OnFab
                             toast("Welcome in project!");
                             break;
                         case 2:
-                            //startActivity(new Intent(this, MapsActivity.class));
+                            startActivity(new Intent(this, MapsActivity.class));
                             break;
                         case 3:
                             startActivity(new Intent(this, ControlActivity.class));
@@ -234,22 +235,30 @@ public class MainActivity extends AppCompatActivity implements SheetLayout.OnFab
                             openGithub();
                             break;
                         case 9:
-                            //startActivity(new Intent(this, ContactActivity.class));
+                            startActivity(new Intent(this, ContactActivity.class));
                             break;
                         case 10:
                             startActivity(new Intent(this, AboutActivity.class));
                             break;
                         case 13:
-                            //startActivity(new Intent(this, CroatiaActivity.class));
+                            Intent croatiaIntent = new Intent(this, CountryActivity.class);
+                            croatiaIntent.putExtra("conutryName", "Croatia");
+                            startActivity(croatiaIntent);
                             break;
                         case 14:
-                            startActivity(new Intent(this, CountryActivity.class));
+                            Intent polandIntent = new Intent(this, CountryActivity.class);
+                            polandIntent.putExtra("conutryName", "Poland");
+                            startActivity(polandIntent);
                             break;
                         case 15:
-                            //startActivity(new Intent(this, SloveniaActivity.class));
+                            Intent sloveniaIntent = new Intent(this, CountryActivity.class);
+                            sloveniaIntent.putExtra("conutryName", "Slovenia");
+                            startActivity(sloveniaIntent);
                             break;
                         case 16:
-                            //startActivity(new Intent(this, SpainActivity.class));
+                            Intent spainIntent = new Intent(this, CountryActivity.class);
+                            spainIntent.putExtra("conutryName", "Spain");
+                            startActivity(spainIntent);
                             break;
                     }
                     return true;

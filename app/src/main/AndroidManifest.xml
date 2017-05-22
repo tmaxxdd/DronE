@@ -48,14 +48,14 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
-        <activity
-            android:name=".Drone$MapsActivity"
-            android:label="@string/title_activity_maps" />
-        <activity android:name=".Drone$ControlActivity" />
+        <activity android:name=".Drone.MapsActivity" />
         <activity android:name=".AddDroneActivity"/>
         <activity android:name=".More.SettingsActivity"/>
         <activity android:name=".More.AboutActivity"/>
-        <activity android:name=".Countries.CountryActivity"/>
+        <activity android:name=".Countries.CountryActivity"
+            android:theme="@style/AppTheme"/>
+        <activity android:name=".Drone.ControlActivity"/>
+        <activity android:name=".More.ContactActivity"/>
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${applicationId}.provider"

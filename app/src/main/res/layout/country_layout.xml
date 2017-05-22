@@ -144,12 +144,12 @@
                         android:id="@+id/country_polish_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Polski"
-                        android:textSize="20sp"
                         android:layout_margin="16dp"
-                        android:textColor="?android:textColorPrimary"/>
+                        android:text="Polski"
+                        android:textColor="?android:textColorPrimary"
+                        android:textSize="20sp" />
 
-                <com.ms.square.android.expandabletextview.ExpandableTextView
+                    <com.ms.square.android.expandabletextview.ExpandableTextView
                     xmlns:android="http://schemas.android.com/apk/res/android"
                     xmlns:expandableTextView="http://schemas.android.com/apk/res-auto"
                     android:id="@+id/country_polish_expandableview"
@@ -183,5 +183,7 @@
         </RelativeLayout>
 
     </android.support.design.widget.AppBarLayout>
+
+
 
 </android.support.design.widget.CoordinatorLayout>

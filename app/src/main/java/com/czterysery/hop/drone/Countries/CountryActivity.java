@@ -27,6 +27,8 @@ import butterknife.ButterKnife;
 public class CountryActivity extends AppCompatActivity {
     public static final int ORIENTATION_PORTRAIT = 1;
     public static final int ORIENTATION_LANDSCAPE = 2;
+    public final static boolean LIGHT_THEME = false;
+    public final static boolean DARK_THEME = true;
     MyThemeManager myThemeManager;
     @BindView(R2.id.country_bar_layout)
     AppBarLayout appBarLayout;
@@ -41,6 +43,7 @@ public class CountryActivity extends AppCompatActivity {
     @BindView(R2.id.country_polish_expandableview)
     ExpandableTextView polishTextView;
     private PhoneInfo phoneInfo;
+    private String countryName;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -49,6 +52,9 @@ public class CountryActivity extends AppCompatActivity {
         myThemeManager.chooseTheme();//Automatically set light or dark
         setContentView(R.layout.country_layout);
         ButterKnife.bind(this);
+        Bundle bundle = getIntent().getExtras();
+        countryName = bundle.getString("countryName");
+
         phoneInfo = new PhoneInfo(this);//Returns important data about smartphone
         configureImageView();
         initializeToolbar();
@@ -60,8 +66,29 @@ public class CountryActivity extends AppCompatActivity {
 
         Picasso.with(this).load(R.drawable.poland_photo).fit().into(imageView);
         // IMPORTANT - call setText on the ExpandableTextView to set the text content to display
-        englishTextView.setText(getString(R.string.lorem_ipsum_long));
-        polishTextView.setText(getString(R.string.lorem_ipsum_long));
+        switch (countryName){
+            case "Poland":
+                englishTextView.setText(getString(R.string.poland_english_description));
+                break;
+            case "Croatia":
+                englishTextView.setText(getString(R.string.croatia_english_description));
+                break;
+            case "Slovenia":
+                englishTextView.setText(getString(R.string.slovenia_english_description));
+                break;
+            case "Spain":
+                englishTextView.setText(getString(R.string.spain_english_description));
+                break;
+        }
+        //polishTextView.setText(getString(R.string.lorem_ipsum_long));
+        setContrastTextColor();
+    }
+
+    // FIXME: 21.05.2017 Can't see the text on light theme
+    private void setContrastTextColor() {
+        if (myThemeManager.getTheme() == DARK_THEME){
+
+        }
     }
 
     //In xml value is wrap_content so dynamically set height
