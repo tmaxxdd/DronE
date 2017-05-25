@@ -80,4 +80,13 @@
         <item name="sw_trackColor">?attr/colorPrimaryDark</item>
     </style>
 
+    <style name="spinnerStyled" parent="Material.Widget.Spinner">
+        <item name="rd_style">@style/Material.Drawable.Ripple.Wave</item>
+        <item name="spn_labelEnable">true</item>
+        <item name="spn_arrowSwitchMode">true</item>
+        <item name="spn_arrowAnimDuration">@android:integer/config_shortAnimTime</item>
+        <item name="spn_arrowInterpolator">@android:anim/decelerate_interpolator</item>
+        <item name="spn_arrowColor">@color/colorAccent</item>
+    </style>
+
 </resources>

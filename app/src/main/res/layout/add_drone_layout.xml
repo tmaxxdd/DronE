@@ -77,6 +77,15 @@
                 app:met_primaryColor="@color/colorAccent"
                 app:met_textColor="?android:textColorPrimary" />
 
+            <com.rey.material.widget.Spinner
+                android:id="@+id/add_drone_country_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="16dp"
+                android:layout_margin="16dp"
+                app:spn_label="Select your country"
+                app:v_styleId="@style/spinnerStyled"
+                android:layout_below="@id/add_drone_name_edittext"/>
+
             <com.rengwuxian.materialedittext.MaterialEditText
                 android:id="@+id/add_drone_telemetry_edittext"
                 android:layout_width="match_parent"

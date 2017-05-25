@@ -25,8 +25,14 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.czterysery.hop.drone.Models.MyDrone;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.rengwuxian.materialedittext.MaterialEditText;
 import com.rey.material.widget.Button;
+import com.rey.material.widget.Spinner;
 import com.squareup.picasso.Picasso;
 
 import net.gotev.uploadservice.UploadService;
@@ -36,6 +42,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import butterknife.BindView;
@@ -102,6 +109,12 @@ public class AddDroneActivity extends AppCompatActivity {
     Button cameraButton;
     @BindView(R2.id.add_drone_image_layout)
     RelativeLayout imageLayout;
+    @BindView(R2.id.add_drone_country_spinner)
+    Spinner countrySpinner;
+
+    // Write a message to the database
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference myRef = database.getReference();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -118,9 +131,48 @@ public class AddDroneActivity extends AppCompatActivity {
         info = new PhoneInfo(this);
         ButterKnife.bind(this);
         initializeToolbar();
+        initializeSpinner();
         //TODO Add camera feature in future
         //https://developer.android.com/training/camera/photobasics.html
         imageLayout.setVisibility(View.GONE);//Hided
+    }
+
+    private void initializeSpinner() {
+        getResources().getStringArray(R.array.countries_array);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        myRef.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                MyDrone myDrone = dataSnapshot.getValue(MyDrone.class);
+                toast(myDrone.getName());
+                finish();
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     @Override
@@ -172,6 +224,34 @@ public class AddDroneActivity extends AppCompatActivity {
 
     //TODO Protect with null values!
     private void trySave() {
+
+        getAndPushDataToFirebase();
+
+        String countryName = "Poland";
+
+
+
+        toast("Save");
+        //finish();
+    }
+
+    private void tryClose() {
+        toast("Close");
+        finish();
+    }
+
+    private void toast(String message) {
+        Toast.makeText(
+                this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    private int checkCameraPermission(){
+        return ContextCompat.checkSelfPermission(
+                this, Manifest.permission.CAMERA);
+    }
+
+    private void getAndPushDataToFirebase(){
+
         String droneName = nameEditText
                 .getEditableText().toString();
         String droneDescription = descriptionEditText
@@ -209,27 +289,13 @@ public class AddDroneActivity extends AppCompatActivity {
         String droneController = controllerEditText
                 .getEditableText().toString();
 
-        MyDrone myDrone = new MyDrone(droneImage, droneName, droneDescription, droneTelemetry,
+        MyDrone myDrone = new MyDrone(droneImage, countryName, droneName, droneDescription, droneTelemetry,
                 droneBattery, droneMotors, droneBuzzer, droneBluetooth, droneWifi, droneGps,
                 droneCompass, droneReceiver, droneTransmitter, droneCamera, droneGimbal, dronePwm,
                 droneSwitch, droneBatteryWarner, droneController);
-        toast("Save");
-        finish();
-    }
 
-    private void tryClose() {
-        toast("Close");
-        finish();
-    }
+        myRef.child("Drones").child(countryName).child(droneName).setValue(myDrone);
 
-    private void toast(String message) {
-        Toast.makeText(
-                this, message, Toast.LENGTH_SHORT).show();
-    }
-
-    private int checkCameraPermission(){
-        return ContextCompat.checkSelfPermission(
-                this, Manifest.permission.CAMERA);
     }
 
     @OnClick(R2.id.add_drone_files_button)
