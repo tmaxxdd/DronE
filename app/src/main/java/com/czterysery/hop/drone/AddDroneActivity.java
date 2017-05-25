@@ -20,6 +20,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -138,7 +139,11 @@ public class AddDroneActivity extends AppCompatActivity {
     }
 
     private void initializeSpinner() {
-        getResources().getStringArray(R.array.countries_array);
+        String[] countriesArray =
+                getResources().getStringArray(R.array.countries_array);
+        ArrayAdapter<String> adapter =
+                new ArrayAdapter<String>(this, R.layout.row_spn, countriesArray);
+        adapter.setDropDownViewResource(R.layout.);
     }
 
     @Override
