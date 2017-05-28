@@ -57,6 +57,7 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.github.coyarzun89:fabtransitionactivity:0.2.0'
     compile 'com.rengwuxian.materialedittext:library:2.1.4'
+    compile 'com.github.chuross:expandable-layout:1.0.5'
     //Import services for localization and maps
     compile 'com.google.android.gms:play-services-maps:10.2.4'
     compile 'com.google.android.gms:play-services-location:10.2.4'

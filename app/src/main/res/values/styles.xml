@@ -87,6 +87,7 @@
         <item name="spn_arrowAnimDuration">@android:integer/config_shortAnimTime</item>
         <item name="spn_arrowInterpolator">@android:anim/decelerate_interpolator</item>
         <item name="spn_arrowColor">@color/colorAccent</item>
+        <item name="spn_labelTextColor">@color/colorAccent</item>
     </style>
 
     <style name="LightSpinnerItem" parent="Material.Drawable.Ripple.Wave">

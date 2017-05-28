@@ -17,6 +17,5 @@ public class ReadDroneActivity extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
 
-
     }
 }

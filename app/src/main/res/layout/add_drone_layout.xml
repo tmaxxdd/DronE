@@ -8,7 +8,6 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
         android:background="?attr/colorPrimaryDark">
 
         <android.support.v7.widget.Toolbar
@@ -22,7 +21,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true">
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/add_drone_toolbar">
 
             <RelativeLayout
                 android:id="@+id/add_drone_image_layout"
@@ -67,7 +67,7 @@
                 android:layout_marginBottom="16dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
-                android:layout_marginTop="96dp"
+                android:layout_marginTop="48dp"
                 android:hint="Drone name"
                 android:textSize="24sp"
                 app:met_baseColor="?android:textColorPrimary"
@@ -77,20 +77,60 @@
                 app:met_primaryColor="@color/colorAccent"
                 app:met_textColor="?android:textColorPrimary" />
 
+            <LinearLayout
+                android:id="@+id/add_drone_spinner_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/add_drone_name_edittext">
+
             <com.rey.material.widget.Spinner
                 android:id="@+id/add_drone_country_spinner"
                 android:layout_width="match_parent"
-                android:layout_height="16dp"
+                android:layout_height="wrap_content"
                 android:layout_margin="16dp"
                 app:spn_label="Select your country"
-                app:v_styleId="@style/spinnerStyled"
-                android:layout_below="@id/add_drone_name_edittext"/>
+                style="@style/Material.Widget.Spinner" />
+
+            </LinearLayout>
+
+            <com.rey.material.widget.Button
+                android:id="@+id/add_drone_specification_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/add_drone_spinner_layout"
+                android:layout_alignParentRight="true"
+                android:layout_margin="16dp"
+                android:text="Specification"
+                style="@style/Base.Widget.AppCompat.Button.Borderless"
+                app:rd_enable="true"
+                app:rd_style="@style/Material.Drawable.Ripple.Wave.Light"
+                android:textColor="?android:textColorPrimary"/>
+
+            <TextView
+                android:id="@+id/add_drone_specification_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/add_drone_specification_button"
+                android:text="You can show/hide some specific fields. Click on [specification] button above. Empty fields will be filled with None text."
+                android:layout_margin="16dp"
+                android:textColor="?android:textColorPrimary"/>
+
+            <com.github.chuross.library.ExpandableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/add_drone_expandable_view"
+                android:layout_below="@+id/add_drone_specification_textview"
+                app:exl_expanded="true">
+                <!-- any child views -->
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
 
             <com.rengwuxian.materialedittext.MaterialEditText
                 android:id="@+id/add_drone_telemetry_edittext"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/add_drone_name_edittext"
                 android:layout_margin="16dp"
                 android:textSize="14sp"
                 android:hint="Drone telemetry"
@@ -138,7 +178,7 @@
                 android:layout_below="@id/add_drone_motors_edittext"
                 android:layout_margin="16dp"
                 android:textSize="14sp"
-                android:hint="Drone description"
+                android:hint="Drone buzzer"
                 app:met_floatingLabel="highlight"
                 app:met_floatingLabelText="Describe your buzzer"
                 app:met_maxCharacters="300"
@@ -327,11 +367,15 @@
                 app:met_baseColor="?android:textColorPrimary"
                 app:met_primaryColor="@color/colorAccent"/>
 
+                </RelativeLayout>
+
+            </com.github.chuross.library.ExpandableLayout>
+
             <com.rengwuxian.materialedittext.MaterialEditText
                 android:id="@+id/add_drone_description_edittext"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/add_drone_controller_edittext"
+                android:layout_below="@id/add_drone_expandable_view"
                 android:layout_margin="16dp"
                 android:textSize="14sp"
                 android:hint="Drone description"

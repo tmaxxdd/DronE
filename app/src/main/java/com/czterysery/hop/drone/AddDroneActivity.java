@@ -1,10 +1,13 @@
 package com.czterysery.hop.drone;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -19,16 +22,13 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.czterysery.hop.drone.Models.MyDrone;
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
+import com.github.chuross.library.ExpandableLayout;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.rengwuxian.materialedittext.MaterialEditText;
@@ -43,7 +43,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import java.util.ArrayList;
 import java.util.Date;
 
 import butterknife.BindView;
@@ -108,14 +108,21 @@ public class AddDroneActivity extends AppCompatActivity {
     Button filesButton;
     @BindView(R2.id.add_drone_camera_button)
     Button cameraButton;
+    @BindView(R2.id.add_drone_specification_button)
+    Button specificationButton;
     @BindView(R2.id.add_drone_image_layout)
     RelativeLayout imageLayout;
     @BindView(R2.id.add_drone_country_spinner)
     Spinner countrySpinner;
+    @BindView(R2.id.add_drone_expandable_view)
+    ExpandableLayout expandableLayout;
+    private String countryName, droneName, droneDescription, droneTransmitter, droneTelemetry, droneBattery,
+            droneMotors, droneBuzzer, droneBluetooth, droneWifi, droneGps, droneCompass, droneReceiver,
+            droneCamera, droneGimbal, dronePwm, droneSwitch, droneBatteryWarner, droneController;
+    private ArrayList<String> emptyFields = new ArrayList<>();
+    private FirebaseHandler firebase;
+    private DatabaseReference dronesDatabase;
 
-    // Write a message to the database
-    FirebaseDatabase database = FirebaseDatabase.getInstance();
-    DatabaseReference myRef = database.getReference();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -135,7 +142,7 @@ public class AddDroneActivity extends AppCompatActivity {
         initializeSpinner();
         //TODO Add camera feature in future
         //https://developer.android.com/training/camera/photobasics.html
-        imageLayout.setVisibility(View.GONE);//Hided
+        //imageLayout.setVisibility(View.GONE);//Hided
     }
 
     private void initializeSpinner() {
@@ -143,42 +150,32 @@ public class AddDroneActivity extends AppCompatActivity {
                 getResources().getStringArray(R.array.countries_array);
         ArrayAdapter<String> adapter =
                 new ArrayAdapter<String>(this, R.layout.row_spn, countriesArray);
-        adapter.setDropDownViewResource(R.layout.);
+        adapter.setDropDownViewResource(R.layout.row_spn_dropdown);
+        countrySpinner.setAdapter(adapter);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
 
-        myRef.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                MyDrone myDrone = dataSnapshot.getValue(MyDrone.class);
-                toast(myDrone.getName());
-                finish();
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+        firebase = new FirebaseHandler(this);
+        dronesDatabase = firebase.getDronesRef();
+        expandableLayout.expand();
     }
+
+    @OnClick(R2.id.add_drone_specification_button)
+    public void changeLayoutExpand(){
+        if (expandableLayout.isExpanded()){
+            //Visible
+            expandableLayout.collapse();
+            toast("Hide specific data");
+        }else{
+            //Hided
+            expandableLayout.expand();
+            toast("Show specific data");
+        }
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -230,19 +227,41 @@ public class AddDroneActivity extends AppCompatActivity {
     //TODO Protect with null values!
     private void trySave() {
 
-        getAndPushDataToFirebase();
+        if (isOnline()){
+            toast("Uploaded to database!");
+            pushObjectToFirebase();
+        }else{
+            toast("No internet connection. Save to offline");
+            pushObjectToOffline();
+        }
 
-        String countryName = "Poland";
+    }
 
+    private void pushObjectToOffline() {
+        boolean formFilled = checkIfFormIsCorrect();
 
+        if (formFilled) {//Important fileds filled
+            MyDrone myDrone = new MyDrone(droneImage, countryName, droneName, droneDescription, droneTelemetry,
+                    droneBattery, droneMotors, droneBuzzer, droneBluetooth, droneWifi, droneGps,
+                    droneCompass, droneReceiver, droneTransmitter, droneCamera, droneGimbal, dronePwm,
+                    droneSwitch, droneBatteryWarner, droneController);
 
-        toast("Save");
-        //finish();
+            dronesDatabase.child(droneName).setValue(myDrone).addOnSuccessListener(task -> finish());
+        }else{
+            toast("Complete: " + emptyFields + " and please again.");
+        }
     }
 
     private void tryClose() {
         toast("Close");
         finish();
+    }
+
+    public boolean isOnline() {
+        ConnectivityManager cm =
+                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        return netInfo != null && netInfo.isConnectedOrConnecting();
     }
 
     private void toast(String message) {
@@ -255,52 +274,170 @@ public class AddDroneActivity extends AppCompatActivity {
                 this, Manifest.permission.CAMERA);
     }
 
-    private void getAndPushDataToFirebase(){
+    private boolean checkIfFormIsCorrect(){
 
-        String droneName = nameEditText
+        //Country
+        countryName = (String) countrySpinner.getSelectedItem();
+        ///Strings only allowed from adapter
+        if (countryName.equals("None")){
+            emptyFields.add("Country");
+            return false;
+        }
+
+        //Name
+        droneName = nameEditText
                 .getEditableText().toString();
-        String droneDescription = descriptionEditText
-                .getEditableText().toString();
-        String droneTransmitter = transmitterEditText
-                .getEditableText().toString();
-        String droneBattery = batteryEditText
-                .getEditableText().toString();
-        String droneMotors = motorsEditText
-                .getEditableText().toString();
-        String droneBluetooth = bluetoothEditText
-                .getEditableText().toString();
-        String droneBuzzer = buzzerEditText
-                .getEditableText().toString();
-        String droneWifi = wifiEditText
-                .getEditableText().toString();
-        String droneGps = gpsEditText
-                .getEditableText().toString();
-        String droneCompass = compassEditText
-                .getEditableText().toString();
-        String droneReceiver = receiverEditText
-                .getEditableText().toString();
-        String droneTelemetry = telemetryEditText
-                .getEditableText().toString();
-        String droneCamera = cameraEditText
-                .getEditableText().toString();
-        String droneGimbal = gimbalEditText
-                .getEditableText().toString();
-        String dronePwm = pwmEditText
-                .getEditableText().toString();
-        String droneSwitch = switchEditText
-                .getEditableText().toString();
-        String droneBatteryWarner = batterywarnerEditText
-                .getEditableText().toString();
-        String droneController = controllerEditText
+        if (droneName.equals("")){
+            emptyFields.add("Name");
+            return false;
+        }
+
+        //Description
+        droneDescription = descriptionEditText
                 .getEditableText().toString();
 
-        MyDrone myDrone = new MyDrone(droneImage, countryName, droneName, droneDescription, droneTelemetry,
-                droneBattery, droneMotors, droneBuzzer, droneBluetooth, droneWifi, droneGps,
-                droneCompass, droneReceiver, droneTransmitter, droneCamera, droneGimbal, dronePwm,
-                droneSwitch, droneBatteryWarner, droneController);
+        if (droneDescription.equals("")){
+            emptyFields.add("Description");
+            return false;
+        }
 
-        myRef.child("Drones").child(countryName).child(droneName).setValue(myDrone);
+        //Transmitter
+        droneTransmitter = transmitterEditText
+                .getEditableText().toString();
+        if (droneTransmitter.equals("")){
+            droneTransmitter = "None";
+        }
 
+        //Battery
+        droneBattery = batteryEditText
+                .getEditableText().toString();
+        if (droneBattery.equals("")){
+            droneBattery = "None";
+        }
+
+        //Motors
+        droneMotors = motorsEditText
+                .getEditableText().toString();
+        if (droneMotors.equals("")){
+            droneMotors = "None";
+        }
+
+        //Bluetooth
+        droneBluetooth = bluetoothEditText
+                .getEditableText().toString();
+        if (droneBluetooth.equals("")){
+            droneBluetooth = "None";
+        }
+
+        //Buzzer
+        droneBuzzer = buzzerEditText
+                .getEditableText().toString();
+        if (droneBuzzer.equals("")){
+            droneBuzzer = "None";
+        }
+
+        //WiFi
+        droneWifi = wifiEditText
+                .getEditableText().toString();
+        if (droneWifi.equals("")){
+            droneWifi = "None";
+        }
+
+        //GPS
+        droneGps = gpsEditText
+                .getEditableText().toString();
+        if (droneGps.equals("")){
+            droneGps = "None";
+        }
+
+        //Compass
+        droneCompass = compassEditText
+                .getEditableText().toString();
+        if (droneCompass.equals("")){
+            droneCompass = "None";
+        }
+
+        //Receiver
+        droneReceiver = receiverEditText
+                .getEditableText().toString();
+        if (droneReceiver.equals("")){
+            droneReceiver = "None";
+        }
+
+        //Telemetry
+        droneTelemetry = telemetryEditText
+                .getEditableText().toString();
+        if (droneTelemetry.equals("")){
+            droneTelemetry = "None";
+        }
+
+        //Camera
+        droneCamera = cameraEditText
+                .getEditableText().toString();
+        if (droneCamera.equals("")){
+            droneCamera = "None";
+        }
+
+        //Gimbal
+        droneGimbal = gimbalEditText
+                .getEditableText().toString();
+        if (droneGimbal.equals("")){
+            droneGimbal = "None";
+        }
+
+        //PWM
+        dronePwm = pwmEditText
+                .getEditableText().toString();
+        if (dronePwm.equals("")){
+            dronePwm = "None";
+        }
+
+        //Switch
+        droneSwitch = switchEditText
+                .getEditableText().toString();
+        if (droneSwitch.equals("")){
+            droneSwitch = "None";
+        }
+
+        //BatteryWarner
+        droneBatteryWarner = batterywarnerEditText
+                .getEditableText().toString();
+        if (droneBatteryWarner.equals("")){
+            droneBatteryWarner = "None";
+        }
+
+        //Controller
+        droneController = controllerEditText
+                .getEditableText().toString();
+        if (droneController.equals("")){
+            droneController = "None";
+        }
+
+        //Function fields are ok, can continue
+        return true;
+    }
+
+    private void pushObjectToFirebase(){
+        boolean formFilled = checkIfFormIsCorrect();
+
+        if (formFilled){//Important fileds filled
+            MyDrone myDrone = new MyDrone(droneImage, countryName, droneName, droneDescription, droneTelemetry,
+                    droneBattery, droneMotors, droneBuzzer, droneBluetooth, droneWifi, droneGps,
+                    droneCompass, droneReceiver, droneTransmitter, droneCamera, droneGimbal, dronePwm,
+                    droneSwitch, droneBatteryWarner, droneController);
+
+            dronesDatabase.child(droneName).setValue(myDrone)
+                    .addOnCompleteListener(task -> {
+                        toast("Added successful.");
+                        finish();
+                    })
+                    .addOnFailureListener(e -> {
+                        toast("Problem. Not added drone.");
+                        Log.d(TAG, "pushObjectToFirebase: " + e.getMessage());
+                    });
+            }else{
+                toast("Complete: " + emptyFields + " and please again.");
+            }
     }
 
     @OnClick(R2.id.add_drone_files_button)

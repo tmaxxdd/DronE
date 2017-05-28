@@ -2,6 +2,7 @@
 <resources>
 
     <string-array name="countries_array">
+        <item>None</item>
         <item>Croatia</item>
         <item>Poland</item>
         <item>Slovenia</item>
