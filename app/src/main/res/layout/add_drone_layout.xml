@@ -111,7 +111,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/add_drone_specification_button"
-                android:text="You can show/hide some specific fields. Click on [specification] button above. Empty fields will be filled with None text."
+                android:text="@string/specific_data_text"
                 android:layout_margin="16dp"
                 android:textColor="?android:textColorPrimary"/>
 

@@ -30,8 +30,8 @@ import android.widget.Toast;
 import com.czterysery.hop.drone.Models.MyDrone;
 import com.github.chuross.library.ExpandableLayout;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.rengwuxian.materialedittext.MaterialEditText;
+import com.rey.material.app.Dialog;
 import com.rey.material.widget.Button;
 import com.rey.material.widget.Spinner;
 import com.squareup.picasso.Picasso;
@@ -55,8 +55,6 @@ import butterknife.OnClick;
  */
 
 public class AddDroneActivity extends AppCompatActivity {
-    private static final int PICK_IMAGE_GALLERY = 1;
-    private static final int PICK_IMAGE_CAMERA = 2;
     private static final String TAG = "AddDroneActivity";
     private MyThemeManager myThemeManager;
     private PhoneInfo info;
@@ -145,15 +143,6 @@ public class AddDroneActivity extends AppCompatActivity {
         //imageLayout.setVisibility(View.GONE);//Hided
     }
 
-    private void initializeSpinner() {
-        String[] countriesArray =
-                getResources().getStringArray(R.array.countries_array);
-        ArrayAdapter<String> adapter =
-                new ArrayAdapter<String>(this, R.layout.row_spn, countriesArray);
-        adapter.setDropDownViewResource(R.layout.row_spn_dropdown);
-        countrySpinner.setAdapter(adapter);
-    }
-
     @Override
     protected void onStart() {
         super.onStart();
@@ -163,31 +152,17 @@ public class AddDroneActivity extends AppCompatActivity {
         expandableLayout.expand();
     }
 
-    @OnClick(R2.id.add_drone_specification_button)
-    public void changeLayoutExpand(){
-        if (expandableLayout.isExpanded()){
-            //Visible
-            expandableLayout.collapse();
-            toast("Hide specific data");
-        }else{
-            //Hided
-            expandableLayout.expand();
-            toast("Show specific data");
-        }
+    @Override
+    protected void onStop() {
+        super.onStop();
+        System.gc();
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_add_drone, menu);
         return true;
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        System.gc();
     }
 
     @Override
@@ -203,58 +178,63 @@ public class AddDroneActivity extends AppCompatActivity {
         return true;
     }
 
-    private void initializeToolbar() {
-        ActionBar actionBar;
-        if (toolbar != null) {
-            toolbar.bringToFront();
-            setSupportActionBar(toolbar);
-
-            actionBar = getSupportActionBar();
-            if (actionBar != null) {
-                actionBar.setTitle("Add drone");
-                actionBar.setDisplayHomeAsUpEnabled(true);
-                actionBar.setDisplayShowHomeEnabled(true);
-                actionBar.setDisplayShowTitleEnabled(true);
-                actionBar.setDisplayUseLogoEnabled(false);
-                actionBar.setHomeButtonEnabled(true);
-                if (myThemeManager.getTheme() == MyThemeManager.DARK_THEME)
-                    actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_back_white_24dp);
-                else actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24dp);
-            }
+    private void trySave() {
+        if (isOnline()){
+            toast("Uploading to database...");
+            pushObjectToFirebase();
+        }else{
+            toast("No internet connection. Saving to offline...");
+            pushObjectToOffline();
         }
     }
 
-    //TODO Protect with null values!
-    private void trySave() {
-
-        if (isOnline()){
-            toast("Uploaded to database!");
-            pushObjectToFirebase();
-        }else{
-            toast("No internet connection. Save to offline");
-            pushObjectToOffline();
-        }
-
+    private void tryClose() {
+        //Ask user if sure to exit
+        Dialogs dialogs = new Dialogs(this);
+        Dialog cancelDialog =
+                dialogs.getCancelAddDrone();
+        cancelDialog.show();
     }
 
     private void pushObjectToOffline() {
         boolean formFilled = checkIfFormIsCorrect();
 
-        if (formFilled) {//Important fileds filled
+        if (formFilled) {//Important fields are filled
             MyDrone myDrone = new MyDrone(droneImage, countryName, droneName, droneDescription, droneTelemetry,
                     droneBattery, droneMotors, droneBuzzer, droneBluetooth, droneWifi, droneGps,
                     droneCompass, droneReceiver, droneTransmitter, droneCamera, droneGimbal, dronePwm,
                     droneSwitch, droneBatteryWarner, droneController);
 
-            dronesDatabase.child(droneName).setValue(myDrone).addOnSuccessListener(task -> finish());
+            dronesDatabase.child(droneName).setValue(myDrone).addOnSuccessListener(task -> {
+                toast("Success!");
+                finish();
+            });
         }else{
             toast("Complete: " + emptyFields + " and please again.");
         }
     }
 
-    private void tryClose() {
-        toast("Close");
-        finish();
+    private void pushObjectToFirebase(){
+        boolean formFilled = checkIfFormIsCorrect();
+
+        if (formFilled){//Important fileds filled
+            MyDrone myDrone = new MyDrone(droneImage, countryName, droneName, droneDescription, droneTelemetry,
+                    droneBattery, droneMotors, droneBuzzer, droneBluetooth, droneWifi, droneGps,
+                    droneCompass, droneReceiver, droneTransmitter, droneCamera, droneGimbal, dronePwm,
+                    droneSwitch, droneBatteryWarner, droneController);
+
+            dronesDatabase.child(droneName).setValue(myDrone)
+                    .addOnCompleteListener(task -> {
+                        toast("Added successful.");
+                        finish();
+                    })
+                    .addOnFailureListener(e -> {
+                        toast("Problem. Not added drone.");
+                        Log.d(TAG, "pushObjectToFirebase: " + e.getMessage());
+                    });
+        }else{
+            toast("Complete: " + emptyFields + " and please again.");
+        }
     }
 
     public boolean isOnline() {
@@ -269,11 +249,13 @@ public class AddDroneActivity extends AppCompatActivity {
                 this, message, Toast.LENGTH_SHORT).show();
     }
 
-    private int checkCameraPermission(){
-        return ContextCompat.checkSelfPermission(
-                this, Manifest.permission.CAMERA);
-    }
-
+    /*
+    User have to input drone's:
+    Name
+    Country
+    Description
+    Other fields are not mandatory and can be empty.
+     */
     private boolean checkIfFormIsCorrect(){
 
         //Country
@@ -417,195 +399,59 @@ public class AddDroneActivity extends AppCompatActivity {
         return true;
     }
 
-    private void pushObjectToFirebase(){
-        boolean formFilled = checkIfFormIsCorrect();
+    private void initializeSpinner() {
+        String[] countriesArray =
+                getResources().getStringArray(R.array.countries_array);
+        ArrayAdapter<String> adapter =
+                new ArrayAdapter<String>(this, R.layout.row_spn, countriesArray);
+        adapter.setDropDownViewResource(R.layout.row_spn_dropdown);
+        countrySpinner.setAdapter(adapter);
+    }
 
-        if (formFilled){//Important fileds filled
-            MyDrone myDrone = new MyDrone(droneImage, countryName, droneName, droneDescription, droneTelemetry,
-                    droneBattery, droneMotors, droneBuzzer, droneBluetooth, droneWifi, droneGps,
-                    droneCompass, droneReceiver, droneTransmitter, droneCamera, droneGimbal, dronePwm,
-                    droneSwitch, droneBatteryWarner, droneController);
+    private void initializeToolbar() {
+        ActionBar actionBar;
+        if (toolbar != null) {
+            toolbar.bringToFront();
+            setSupportActionBar(toolbar);
 
-            dronesDatabase.child(droneName).setValue(myDrone)
-                    .addOnCompleteListener(task -> {
-                        toast("Added successful.");
-                        finish();
-                    })
-                    .addOnFailureListener(e -> {
-                        toast("Problem. Not added drone.");
-                        Log.d(TAG, "pushObjectToFirebase: " + e.getMessage());
-                    });
-            }else{
-                toast("Complete: " + emptyFields + " and please again.");
+            actionBar = getSupportActionBar();
+            if (actionBar != null) {
+                actionBar.setTitle("Add drone");
+                actionBar.setDisplayHomeAsUpEnabled(true);
+                actionBar.setDisplayShowHomeEnabled(true);
+                actionBar.setDisplayShowTitleEnabled(true);
+                actionBar.setDisplayUseLogoEnabled(false);
+                actionBar.setHomeButtonEnabled(true);
+                if (myThemeManager.getTheme() == MyThemeManager.DARK_THEME)
+                    actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_back_white_24dp);
+                else actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24dp);
             }
+        }
+    }
+
+    @OnClick(R2.id.add_drone_specification_button)
+    public void changeLayoutExpand(){
+        if (expandableLayout.isExpanded()){
+            //Visible
+            expandableLayout.collapse();
+            toast("Hide specific data");
+        }else{
+            //Hided
+            expandableLayout.expand();
+            toast("Show specific data");
+        }
     }
 
     @OnClick(R2.id.add_drone_files_button)
-    public void runGalleryIntent(){
-        //http://codetheory.in/android-pick-select-image-from-gallery-with-intents/
-        Intent intent = new Intent();
-        // Show only images, no videos or anything else
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        // Always show the chooser (if there are multiple options available)
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_GALLERY);
+    public void selectFromFiles(){
+        ImageWorker worker = new ImageWorker(this, imageView);
+        worker.runGalleryIntent();
     }
 
-    //TODO Add log.d's and exceptions to check if smth work
     @OnClick(R2.id.add_drone_camera_button)
-    public void runCameraIntent(){
-        //https://androidkennel.org/android-camera-access-tutorial/
-
-        //check if user allowed permission
-
-        //TODO Divide and make method
-        if (info.getApi() >= 23){
-            int state = checkCameraPermission();
-            if (state == PackageManager.PERMISSION_GRANTED) {
-                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                pathFromCamera = generateFilePathBySdk();
-                startActivityForResult(intent, PICK_IMAGE_CAMERA);
-            }else{
-                ActivityCompat.requestPermissions(this, new String[] {
-                        Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE }, 0);
-            }
-        }else{
-            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            pathFromCamera = generateFilePathBySdk();
-            startActivityForResult(intent, PICK_IMAGE_CAMERA);
-        }
-    }
-
-    private String generateFilePathBySdk(){
-        String path = null;
-        if (info.getApi() >= 23) {
-            toast("New SDK filepath");
-
-            path = getOutputMediaFile().getAbsolutePath();
-            Log.d(TAG, "generateFilePathBySdk SDK 7.0.0: "+path);
-        }else{
-            toast("Old SDK filepath");
-            try {
-                path = getOutputMediaFile().getAbsolutePath();
-            }catch (NullPointerException e){
-                e.printStackTrace();
-                toast("Cannot create path for file");
-            }
-        }
-        return path;
-    }
-
-    @Nullable
-    private static File getOutputMediaFile(){
-        File mediaStorageDir = new File(
-                Environment.getExternalStorageDirectory().getPath() + "/DronE");/** The right destination*/
-
-        if (!mediaStorageDir.exists()){
-            if (!mediaStorageDir.mkdirs()){
-                return null;
-            }
-        }
-
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        File file = new File(mediaStorageDir + File.separator +
-                "IMG_"+ timeStamp + ".jpg");
-
-        Log.d(TAG, "getOutputMediaFile: "+ file.getAbsolutePath());
-        return file;
-    }
-
-    private void storeImage(Bitmap image, String path) {
-        File pictureFile = new File(path);
-        if (pictureFile == null) {
-            Log.d(TAG,
-                    "Error creating media file, check storage permissions: ");// e.getMessage());
-            return;
-        }
-        try {
-            FileOutputStream fos = new FileOutputStream(pictureFile);
-            image.compress(Bitmap.CompressFormat.JPEG, 90, fos);
-            fos.close();
-        } catch (FileNotFoundException e) {
-            Log.d(TAG, "File not found: " + e.getMessage());
-        } catch (IOException e) {
-            Log.d(TAG, "Error accessing file: " + e.getMessage());
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        if (info.getApi() >= 23) {
-            //Ask for permission
-            if (requestCode == 0) {
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED
-                        && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
-                    toast("PERMISSION_GRANTED");
-                    runCameraIntent();
-                } else {
-                    toast("PERMISSION_DENIED");
-                    toast("Can't use camera");
-                }
-            }
-        }else{
-            //Older versions
-            runCameraIntent();
-        }
-    }
-
-    //TODO Divide code on smaller methods and wrap delicately places
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        switch (requestCode){
-            case PICK_IMAGE_GALLERY:
-                if (resultCode == RESULT_OK &&
-                        data != null && data.getData() != null){
-                    Uri uri = data.getData();
-                    try {
-                        Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
-                        // Log.d(TAG, String.valueOf(bitmap));
-                        storeImage(bitmap, uri.getPath());
-                        FtpOperator ftpOperator = new FtpOperator();
-                        ftpOperator.uploadFTP(this, uri.getPath());
-                        Picasso.with(this).load(uri).fit().into(imageView);
-                        toast("Success on gallery");
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }else{
-                    toast("Something went wrong. Can't make image");
-                    Log.d(TAG, "onActivityResult: Error gallery");
-                }
-                break;
-            case PICK_IMAGE_CAMERA:
-                if (resultCode == RESULT_OK) {
-                    //TODO Image may be saved twice, try avoid on 7.0.0
-                    createBitmapFromFile(pathFromCamera);
-                    FtpOperator ftpOperator = new FtpOperator();
-                    ftpOperator.uploadFTP(this, pathFromCamera);
-                    Picasso.with(this).load(pathFromCamera).fit().into(imageView);
-                    toast("Success on camera");
-                }else{
-                    toast("Something went wrong. Can't make image");
-                    Log.d(TAG, "onActivityResult: Error camera");
-                }
-                break;
-        }
-    }
-
-
-    private void createBitmapFromFile(String path){
-        File image = new File(path);
-        if (!image.exists()){
-            try {
-                image.createNewFile();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
-        Bitmap bitmap = BitmapFactory.decodeFile(path,bmOptions);
-        Bitmap.createScaledBitmap(bitmap, 1280, 720, true);
+    public void selectFromCamera(){
+        ImageWorker worker = new ImageWorker(this, imageView);
+        worker.runCameraIntent();
     }
 
 }
