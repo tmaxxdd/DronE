@@ -1,20 +1,14 @@
 package com.czterysery.hop.drone;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -34,17 +28,10 @@ import com.rengwuxian.materialedittext.MaterialEditText;
 import com.rey.material.app.Dialog;
 import com.rey.material.widget.Button;
 import com.rey.material.widget.Spinner;
-import com.squareup.picasso.Picasso;
 
 import net.gotev.uploadservice.UploadService;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -56,11 +43,11 @@ import butterknife.OnClick;
 
 public class AddDroneActivity extends AppCompatActivity {
     private static final String TAG = "AddDroneActivity";
+    private static final String IMAGES_DIRECTORY = "http://hoptimist.pl/drone/images/";
     private MyThemeManager myThemeManager;
     private PhoneInfo info;
-    private String pathFromCamera;
-    private String droneImage =
-            "https://pisces.bbystatic.com/BestBuy_US/images/products/5621/5621780_sd.jpg;maxHeight=460;maxWidth=460";
+    private String imageName;
+    private String droneImage;
     //Temporary image
     @BindView(R2.id.add_drone_toolbar)
     Toolbar toolbar;
@@ -120,6 +107,7 @@ public class AddDroneActivity extends AppCompatActivity {
     private ArrayList<String> emptyFields = new ArrayList<>();
     private FirebaseHandler firebase;
     private DatabaseReference dronesDatabase;
+    private ImageWorker worker;
 
 
     @Override
@@ -138,14 +126,12 @@ public class AddDroneActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         initializeToolbar();
         initializeSpinner();
-        //TODO Add camera feature in future
-        //https://developer.android.com/training/camera/photobasics.html
-        //imageLayout.setVisibility(View.GONE);//Hided
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+        worker = new ImageWorker(this);//Run only once
 
         firebase = new FirebaseHandler(this);
         dronesDatabase = firebase.getDronesRef();
@@ -257,6 +243,9 @@ public class AddDroneActivity extends AppCompatActivity {
     Other fields are not mandatory and can be empty.
      */
     private boolean checkIfFormIsCorrect(){
+
+        droneImage = IMAGES_DIRECTORY + imageName;
+        Log.d(TAG, "droneImage: "+droneImage);
 
         //Country
         countryName = (String) countrySpinner.getSelectedItem();
@@ -444,14 +433,71 @@ public class AddDroneActivity extends AppCompatActivity {
 
     @OnClick(R2.id.add_drone_files_button)
     public void selectFromFiles(){
-        ImageWorker worker = new ImageWorker(this, imageView);
         worker.runGalleryIntent();
     }
 
     @OnClick(R2.id.add_drone_camera_button)
     public void selectFromCamera(){
-        ImageWorker worker = new ImageWorker(this, imageView);
         worker.runCameraIntent();
+    }
+
+    //This onActivityResult must be in main activity that ImageWorker is invoked.
+    //The cycle is like Activity -> ImageWorker -> onActivityResult -> ImageWorker
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode){
+            case ImageWorker.PICK_IMAGE_GALLERY:
+                if (resultCode == RESULT_OK &&
+                        data != null && data.getData() != null){
+                    Uri fileUri = data.getData();
+                    String finalPath = worker.getGeneratedPath();
+                    imageName = worker.getImageFileName();
+
+                    Bitmap bitmap = worker.getBitmapFromUri(fileUri);
+                    worker.storeImage(bitmap, finalPath);//Save bitmap in generated path
+                    worker.uploadAndShowImage(finalPath, imageView, droneImage);
+
+                    toast("Success on gallery");
+                }else{
+                    toast("Something went wrong. Can't make image");
+                    Log.d(TAG, "onActivityResult: Error gallery");
+                }
+                break;
+            case ImageWorker.PICK_IMAGE_CAMERA:
+                if (resultCode == RESULT_OK) {
+                    //Don't store image. Photo was saved by intent
+                    String finalPath = worker.getGeneratedPath();//Get raw path
+                    imageName = worker.getImageFileName();//Put to firebase
+                    worker.uploadAndShowImage(finalPath, imageView, droneImage);
+                    toast("Success on camera");
+                }else{
+                    toast("Something went wrong. Can't make image");
+                    Log.d(TAG, "onActivityResult: Error camera");
+                }
+                break;
+        }
+    }
+
+    //TODO Try simplify this
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        if (info.getApi() >= 23) {
+            //Ask for permission
+            if (requestCode == 0) {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED
+                        && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+                    toast("PERMISSION_GRANTED");
+                    selectFromCamera();
+                } else {
+                    toast("PERMISSION_DENIED");
+                    toast("Can't use camera");
+                }
+            }
+        }else{
+            //Older versions
+            selectFromCamera();
+        }
     }
 
 }
