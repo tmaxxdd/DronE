@@ -52,7 +52,7 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
         <activity android:name=".Drone.MapsActivity" />
-        <activity android:name=".AddDroneActivity"/>
+        <activity android:name=".AddDroneActivity" android:screenOrientation="portrait"/>
         <activity android:name=".More.SettingsActivity"/>
         <activity android:name=".More.AboutActivity"/>
         <activity android:name=".Countries.CountryActivity"

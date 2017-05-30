@@ -244,9 +244,6 @@ public class AddDroneActivity extends AppCompatActivity {
      */
     private boolean checkIfFormIsCorrect(){
 
-        droneImage = IMAGES_DIRECTORY + imageName;
-        Log.d(TAG, "droneImage: "+droneImage);
-
         //Country
         countryName = (String) countrySpinner.getSelectedItem();
         ///Strings only allowed from adapter
@@ -452,10 +449,10 @@ public class AddDroneActivity extends AppCompatActivity {
                         data != null && data.getData() != null){
                     Uri fileUri = data.getData();
                     String finalPath = worker.getGeneratedPath();
-                    imageName = worker.getImageFileName();
 
                     Bitmap bitmap = worker.getBitmapFromUri(fileUri);
                     worker.storeImage(bitmap, finalPath);//Save bitmap in generated path
+                    makeImageUrl();//To make droneImage
                     worker.uploadAndShowImage(finalPath, imageView, droneImage);
 
                     toast("Success on gallery");
@@ -468,7 +465,7 @@ public class AddDroneActivity extends AppCompatActivity {
                 if (resultCode == RESULT_OK) {
                     //Don't store image. Photo was saved by intent
                     String finalPath = worker.getGeneratedPath();//Get raw path
-                    imageName = worker.getImageFileName();//Put to firebase
+                    makeImageUrl();//To make droneImage
                     worker.uploadAndShowImage(finalPath, imageView, droneImage);
                     toast("Success on camera");
                 }else{
@@ -476,6 +473,17 @@ public class AddDroneActivity extends AppCompatActivity {
                     Log.d(TAG, "onActivityResult: Error camera");
                 }
                 break;
+        }
+    }
+
+    private void makeImageUrl() {
+        droneImage = null;
+        imageName = worker.getImageFileName();
+        if (imageName != null) {
+            droneImage = IMAGES_DIRECTORY + imageName;
+            Log.d(TAG, "droneImage: " + droneImage);
+        }else{
+            toast("Error. Cannot make URL for image.");
         }
     }
 
