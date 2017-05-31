@@ -2,9 +2,11 @@ package com.czterysery.hop.drone;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -84,6 +86,7 @@ public class ReadDroneActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         layoutWorker = new LayoutWorker(this);
+        initializeToolbar();
         //layoutWorker.calculateImageViewHeight(imageView);
     }
 
@@ -92,6 +95,42 @@ public class ReadDroneActivity extends AppCompatActivity {
         super.onStart();
 
         initializeFirebase();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        if (id == android.R.id.home) {
+            finish();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void initializeToolbar() {
+        ActionBar actionBar;
+        if (toolbar != null) {
+            toolbar.bringToFront();
+            setSupportActionBar(toolbar);
+
+            actionBar = getSupportActionBar();
+            if (actionBar != null) {
+                actionBar.setTitle(droneName);
+                actionBar.setDisplayHomeAsUpEnabled(true);
+                actionBar.setDisplayShowHomeEnabled(true);
+                actionBar.setDisplayShowTitleEnabled(true);
+                actionBar.setDisplayUseLogoEnabled(false);
+                actionBar.setHomeButtonEnabled(true);
+                if (myThemeManager.getTheme() == MyThemeManager.DARK_THEME)
+                    actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_back_white_24dp);
+                else actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24dp);
+            }
+        }
     }
 
     private void initializeFirebase() {

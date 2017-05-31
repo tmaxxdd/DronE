@@ -80,15 +80,6 @@ public class CountryActivity extends AppCompatActivity {
                 englishTextView.setText(getString(R.string.spain_english_description));
                 break;
         }
-        //polishTextView.setText(getString(R.string.lorem_ipsum_long));
-        setContrastTextColor();
-    }
-
-    // FIXME: 21.05.2017 Can't see the text on light theme
-    private void setContrastTextColor() {
-        if (myThemeManager.getTheme() == MyThemeManager.DARK_THEME){
-
-        }
     }
 
     public void initializeToolbar() {
@@ -99,7 +90,7 @@ public class CountryActivity extends AppCompatActivity {
 
             actionBar = getSupportActionBar();
             if (actionBar != null) {
-                actionBar.setTitle("School");
+                actionBar.setTitle(countryName);
                 actionBar.setDisplayHomeAsUpEnabled(true);
                 actionBar.setDisplayShowHomeEnabled(true);
                 actionBar.setDisplayShowTitleEnabled(true);
