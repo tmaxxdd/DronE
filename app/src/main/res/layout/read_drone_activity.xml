@@ -1,0 +1,401 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:background="?attr/colorPrimaryDark">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/read_drone_bar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true">
+
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/read_drone_collapsing_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:contentScrim="?attr/colorPrimary"
+            app:expandedTitleMarginStart="48dp"
+            app:expandedTitleMarginEnd="64dp"
+            android:fitsSystemWindows="true">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/read_drone_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                app:layout_collapseMode="pin" />
+
+            <ImageView
+                android:id="@+id/read_drone_imageview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:contentDescription="image"
+                android:fitsSystemWindows="true"
+                android:scaleType="centerCrop"
+                app:layout_collapseMode="parallax" />
+
+        </android.support.design.widget.CollapsingToolbarLayout>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/scroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="?attr/colorPrimaryDark">
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/read_drone_header_cardview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="16dp"
+                app:cardBackgroundColor="?attr/colorPrimary"
+                app:contentPadding="16dp">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/read_drone_header_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:text="Header"
+                        android:textColor="?android:textColorPrimary"
+                        android:textSize="24sp" />
+
+                    <TextView
+                        android:id="@+id/read_drone_header_description"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/read_drone_header_name"
+                        android:text="Description"
+                        android:textColor="?android:textColorPrimary" />
+
+                </RelativeLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/read_drone_specification"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                app:cardBackgroundColor="?attr/colorPrimary"
+                app:contentPadding="16dp"
+                android:layout_below="@+id/read_drone_header_cardview">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/read_drone_telemetry_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Telemetry"
+                        android:textColor="?android:textColorPrimary"
+                        android:layout_marginBottom="8dp"/>
+
+                    <TextView
+                        android:id="@+id/read_drone_telemetry_textview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="..."
+                        android:textColor="?android:textColorPrimary"
+                        android:layout_below="@+id/read_drone_telemetry_view"
+                        android:layout_marginBottom="8dp"/>
+
+                    <TextView
+                        android:id="@+id/read_drone_battery_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Battery"
+                        android:textColor="?android:textColorPrimary"
+                        android:layout_marginBottom="8dp"
+                        android:layout_below="@+id/read_drone_telemetry_textview"/>
+
+                    <TextView
+                        android:id="@+id/read_drone_battery_textview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="..."
+                        android:textColor="?android:textColorPrimary"
+                        android:layout_below="@+id/read_drone_battery_view"
+                        android:layout_marginBottom="8dp"/>
+
+                    <TextView
+                        android:id="@+id/read_drone_motors_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Motors"
+                        android:textColor="?android:textColorPrimary"
+                        android:layout_marginBottom="8dp"
+                        android:layout_below="@+id/read_drone_battery_textview"/>
+
+                    <TextView
+                        android:id="@+id/read_drone_motors_textview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="..."
+                        android:textColor="?android:textColorPrimary"
+                        android:layout_below="@+id/read_drone_motors_view"
+                        android:layout_marginBottom="8dp"/>
+
+                    <TextView
+                        android:id="@+id/read_drone_buzzer_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Buzzer"
+                        android:textColor="?android:textColorPrimary"
+                        android:layout_marginBottom="8dp"
+                        android:layout_below="@+id/read_drone_motors_textview"/>
+
+                    <TextView
+                        android:id="@+id/read_drone_buzzer_textview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="..."
+                        android:textColor="?android:textColorPrimary"
+                        android:layout_below="@+id/read_drone_buzzer_view"
+                        android:layout_marginBottom="8dp"/>
+
+                    <TextView
+                        android:id="@+id/read_drone_bluetooth_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Bluetooth"
+                        android:textColor="?android:textColorPrimary"
+                        android:layout_marginBottom="8dp"
+                        android:layout_below="@+id/read_drone_buzzer_textview"/>
+
+                    <TextView
+                        android:id="@+id/read_drone_bluetooth_textview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="..."
+                        android:textColor="?android:textColorPrimary"
+                        android:layout_below="@+id/read_drone_bluetooth_view"
+                        android:layout_marginBottom="8dp"/>
+
+                    <TextView
+                        android:id="@+id/read_drone_wifi_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="WiFi"
+                        android:textColor="?android:textColorPrimary"
+                        android:layout_marginBottom="8dp"
+                        android:layout_below="@+id/read_drone_bluetooth_textview"/>
+
+                    <TextView
+                        android:id="@+id/read_drone_wifi_textview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="..."
+                        android:textColor="?android:textColorPrimary"
+                        android:layout_below="@+id/read_drone_wifi_view"
+                        android:layout_marginBottom="8dp"/>
+
+                    <TextView
+                        android:id="@+id/read_drone_gps_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="GPS"
+                        android:textColor="?android:textColorPrimary"
+                        android:layout_marginBottom="8dp"
+                        android:layout_below="@+id/read_drone_wifi_textview"/>
+
+                    <TextView
+                        android:id="@+id/read_drone_gps_textview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="..."
+                        android:textColor="?android:textColorPrimary"
+                        android:layout_below="@+id/read_drone_gps_view"
+                        android:layout_marginBottom="8dp"/>
+
+                    <TextView
+                        android:id="@+id/read_drone_compass_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Compass"
+                        android:textColor="?android:textColorPrimary"
+                        android:layout_marginBottom="8dp"
+                        android:layout_below="@+id/read_drone_gps_textview"/>
+
+                    <TextView
+                        android:id="@+id/read_drone_compass_textview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="..."
+                        android:textColor="?android:textColorPrimary"
+                        android:layout_below="@+id/read_drone_compass_view"
+                        android:layout_marginBottom="8dp"/>
+
+                    <TextView
+                        android:id="@+id/read_drone_receiver_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Receiver"
+                        android:textColor="?android:textColorPrimary"
+                        android:layout_marginBottom="8dp"
+                        android:layout_below="@+id/read_drone_compass_textview"/>
+
+                    <TextView
+                        android:id="@+id/read_drone_receiver_textview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="..."
+                        android:textColor="?android:textColorPrimary"
+                        android:layout_below="@+id/read_drone_receiver_view"
+                        android:layout_marginBottom="8dp"/>
+
+                    <TextView
+                        android:id="@+id/read_drone_transmitter_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Transmitter"
+                        android:textColor="?android:textColorPrimary"
+                        android:layout_marginBottom="8dp"
+                        android:layout_below="@+id/read_drone_receiver_textview"/>
+
+                    <TextView
+                        android:id="@+id/read_drone_transmitter_textview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="..."
+                        android:textColor="?android:textColorPrimary"
+                        android:layout_below="@+id/read_drone_transmitter_view"
+                        android:layout_marginBottom="8dp"/>
+
+                    <TextView
+                        android:id="@+id/read_drone_camera_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Camera"
+                        android:textColor="?android:textColorPrimary"
+                        android:layout_marginBottom="8dp"
+                        android:layout_below="@+id/read_drone_transmitter_textview"/>
+
+                    <TextView
+                        android:id="@+id/read_drone_camera_textview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="..."
+                        android:textColor="?android:textColorPrimary"
+                        android:layout_below="@+id/read_drone_camera_view"
+                        android:layout_marginBottom="8dp"/>
+
+                    <TextView
+                        android:id="@+id/read_drone_pwm_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Power Module"
+                        android:textColor="?android:textColorPrimary"
+                        android:layout_marginBottom="8dp"
+                        android:layout_below="@+id/read_drone_camera_textview"/>
+
+                    <TextView
+                        android:id="@+id/read_drone_pwm_textview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="..."
+                        android:textColor="?android:textColorPrimary"
+                        android:layout_below="@+id/read_drone_pwm_view"
+                        android:layout_marginBottom="8dp"/>
+
+                    <TextView
+                        android:id="@+id/read_drone_switches_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Switches"
+                        android:textColor="?android:textColorPrimary"
+                        android:layout_marginBottom="8dp"
+                        android:layout_below="@+id/read_drone_pwm_textview"/>
+
+                    <TextView
+                        android:id="@+id/read_drone_switches_textview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="..."
+                        android:textColor="?android:textColorPrimary"
+                        android:layout_below="@+id/read_drone_switches_view"
+                        android:layout_marginBottom="8dp"/>
+
+                    <TextView
+                        android:id="@+id/read_drone_battery_warner_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Battery Warner"
+                        android:textColor="?android:textColorPrimary"
+                        android:layout_marginBottom="8dp"
+                        android:layout_below="@+id/read_drone_switches_textview"/>
+
+                    <TextView
+                        android:id="@+id/read_drone_battery_warner_textview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="..."
+                        android:textColor="?android:textColorPrimary"
+                        android:layout_below="@+id/read_drone_battery_warner_view"
+                        android:layout_marginBottom="8dp"/>
+
+                    <TextView
+                        android:id="@+id/read_drone_gimbal_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Gimbal"
+                        android:textColor="?android:textColorPrimary"
+                        android:layout_marginBottom="8dp"
+                        android:layout_below="@+id/read_drone_battery_warner_textview"/>
+
+                    <TextView
+                        android:id="@+id/read_drone_gimbal_textview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="..."
+                        android:textColor="?android:textColorPrimary"
+                        android:layout_below="@+id/read_drone_gimbal_view"
+                        android:layout_marginBottom="8dp"/>
+
+                    <TextView
+                        android:id="@+id/read_drone_controller_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Controller"
+                        android:textColor="?android:textColorPrimary"
+                        android:layout_marginBottom="8dp"
+                        android:layout_below="@+id/read_drone_gimbal_textview"/>
+
+                    <TextView
+                        android:id="@+id/read_drone_controller_textview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="..."
+                        android:textColor="?android:textColorPrimary"
+                        android:layout_below="@+id/read_drone_controller_view"
+                        android:layout_marginBottom="8dp"/>
+
+                </RelativeLayout>
+
+            </android.support.v7.widget.CardView>
+
+        </RelativeLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+</android.support.design.widget.CoordinatorLayout>

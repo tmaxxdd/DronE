@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
@@ -23,6 +24,11 @@ import com.czterysery.hop.drone.More.AboutActivity;
 import com.czterysery.hop.drone.More.ContactActivity;
 import com.czterysery.hop.drone.More.SettingsActivity;
 import com.github.fabtransitionactivity.SheetLayout;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mikepenz.materialdrawer.model.DividerDrawerItem;
@@ -44,14 +50,15 @@ public class MainActivity extends AppCompatActivity implements SheetLayout.OnFab
     private View toolbarLayout;//Contains logo and switch
     private Drawer result;//Navigation drawer
     private RecyclerView.Adapter adapter;
-    private ArrayList<MyDroneOld> drones = new ArrayList<>();
+    private ArrayList<MyDrone> drones = new ArrayList<>();
+    private FirebaseHandler firebaseHandler;
+    private DatabaseReference dronesDatabase;
     @BindView(R2.id.main_recyclerview)
     RecyclerView recyclerView;
     @BindView(R2.id.main_bottom_sheet)
     SheetLayout sheetLayout;
     @BindView(R2.id.main_fab)
     FloatingActionButton fab;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,15 +89,32 @@ public class MainActivity extends AppCompatActivity implements SheetLayout.OnFab
         // Set layout manager to position the items
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        for (int i = 0; i < 20; i++){
-            drones.add(new MyDroneOld(
-                    "https://pisces.bbystatic.com/BestBuy_US/images/products/5621/5621780_sd.jpg;maxHeight=460;maxWidth=460",
-                    "Demo drone" + "#" +i,
-                    getResources().getString(R.string.lorem_ipsum)));
-            adapter.notifyDataSetChanged();
-        }
+        //Initialize handler and set listener
+        initializeFirebase();
 
         initializeToolbarSwitch();
+    }
+
+    private void initializeFirebase() {
+        firebaseHandler = new FirebaseHandler(this);
+        dronesDatabase = firebaseHandler.getDronesRef();
+
+        dronesDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (drones.size() == 0) {//Don't repeat drones
+                    for (DataSnapshot data : dataSnapshot.getChildren()) {
+                        //Add all now
+                        drones.add(data.getValue(MyDrone.class));
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.e(TAG, "onCancelled: ", databaseError.toException());
+            }
+        });
     }
 
     @Override
@@ -242,22 +266,22 @@ public class MainActivity extends AppCompatActivity implements SheetLayout.OnFab
                             break;
                         case 13:
                             Intent croatiaIntent = new Intent(this, CountryActivity.class);
-                            croatiaIntent.putExtra("conutryName", "Croatia");
+                            croatiaIntent.putExtra("countryName", "Croatia");
                             startActivity(croatiaIntent);
                             break;
                         case 14:
                             Intent polandIntent = new Intent(this, CountryActivity.class);
-                            polandIntent.putExtra("conutryName", "Poland");
+                            polandIntent.putExtra("countryName", "Poland");
                             startActivity(polandIntent);
                             break;
                         case 15:
                             Intent sloveniaIntent = new Intent(this, CountryActivity.class);
-                            sloveniaIntent.putExtra("conutryName", "Slovenia");
+                            sloveniaIntent.putExtra("countryName", "Slovenia");
                             startActivity(sloveniaIntent);
                             break;
                         case 16:
                             Intent spainIntent = new Intent(this, CountryActivity.class);
-                            spainIntent.putExtra("conutryName", "Spain");
+                            spainIntent.putExtra("countryName", "Spain");
                             startActivity(spainIntent);
                             break;
                     }

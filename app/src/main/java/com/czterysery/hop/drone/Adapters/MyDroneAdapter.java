@@ -1,21 +1,24 @@
 package com.czterysery.hop.drone.Adapters;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.czterysery.hop.drone.Models.MyDrone;
-import com.czterysery.hop.drone.MyDroneOld;
 import com.czterysery.hop.drone.R;
+import com.czterysery.hop.drone.ReadDroneActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by tmax0 on 15.05.2017.
@@ -23,9 +26,9 @@ import butterknife.ButterKnife;
 
 public class MyDroneAdapter extends RecyclerView.Adapter<MyDroneAdapter.ViewHolder> {
     private Activity activity;
-    private ArrayList<MyDroneOld> drones = new ArrayList<>();
+    private ArrayList<MyDrone> drones = new ArrayList<>();
 
-    public MyDroneAdapter(Activity activity, ArrayList<MyDroneOld> drones) {
+    public MyDroneAdapter(Activity activity, ArrayList<MyDrone> drones) {
         this.activity = activity;
         this.drones = drones;
     }
@@ -42,10 +45,10 @@ public class MyDroneAdapter extends RecyclerView.Adapter<MyDroneAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.headerView.setText(drones.get(position).getHeader());
+        holder.headerView.setText(drones.get(position).getName());
         holder.descriptionView.setText(drones.get(position).getDescription());
         // TODO: 15.05.2017 Improve picasso options
-        Picasso.with(activity).load(drones.get(position).getImage());
+        Picasso.with(activity).load(drones.get(position).getImage()).into(holder.imageView);
     }
 
     @Override
@@ -53,17 +56,26 @@ public class MyDroneAdapter extends RecyclerView.Adapter<MyDroneAdapter.ViewHold
         return drones.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.card_mydrone_description)
         TextView descriptionView;
         @BindView(R.id.card_mydrone_header)
         TextView headerView;
         @BindView(R.id.card_mydrone_imageview)
-        ImageView imaheView;
+        ImageView imageView;
 
-        public ViewHolder(View itemView) {
+        ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
+
+        @OnClick(R.id.card_mydrone_cardview)
+        void onCardClick(){
+            int position = getAdapterPosition();
+            Intent readDroneActivity = new Intent(activity, ReadDroneActivity.class);
+            readDroneActivity.putExtra("droneName", drones.get(position).getName());
+            activity.startActivity(readDroneActivity);
+        }
+
     }
 }

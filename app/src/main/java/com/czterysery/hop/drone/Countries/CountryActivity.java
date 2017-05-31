@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.ImageView;
 
+import com.czterysery.hop.drone.LayoutWorker;
 import com.czterysery.hop.drone.MyThemeManager;
 import com.czterysery.hop.drone.PhoneInfo;
 import com.czterysery.hop.drone.R;
@@ -25,10 +26,6 @@ import butterknife.ButterKnife;
  */
 
 public class CountryActivity extends AppCompatActivity {
-    public static final int ORIENTATION_PORTRAIT = 1;
-    public static final int ORIENTATION_LANDSCAPE = 2;
-    public final static boolean LIGHT_THEME = false;
-    public final static boolean DARK_THEME = true;
     MyThemeManager myThemeManager;
     @BindView(R2.id.country_bar_layout)
     AppBarLayout appBarLayout;
@@ -52,12 +49,15 @@ public class CountryActivity extends AppCompatActivity {
         myThemeManager.chooseTheme();//Automatically set light or dark
         setContentView(R.layout.country_layout);
         ButterKnife.bind(this);
+
         Bundle bundle = getIntent().getExtras();
         countryName = bundle.getString("countryName");
 
         phoneInfo = new PhoneInfo(this);//Returns important data about smartphone
-        configureImageView();
+        LayoutWorker layoutWorker = new LayoutWorker(this);
         initializeToolbar();
+        imageView.setMinimumHeight(
+                layoutWorker.calculateImageViewHeight(imageView));
     }
 
     @Override
@@ -86,35 +86,12 @@ public class CountryActivity extends AppCompatActivity {
 
     // FIXME: 21.05.2017 Can't see the text on light theme
     private void setContrastTextColor() {
-        if (myThemeManager.getTheme() == DARK_THEME){
+        if (myThemeManager.getTheme() == MyThemeManager.DARK_THEME){
 
         }
     }
 
-    //In xml value is wrap_content so dynamically set height
-    private void configureImageView() {
-        int imageViewHeight = 300;//Default
-        int screenHeight = phoneInfo.getScreenHeight();//In px's
-        int orientation = phoneInfo.getOrientation();
-        if (orientation == ORIENTATION_LANDSCAPE) {
-            imageViewHeight = (int) (screenHeight / 1.5);
-        }else if(orientation == ORIENTATION_PORTRAIT){
-            imageViewHeight = screenHeight / 3;
-        }
-        imageView.setMinimumHeight(imageViewHeight);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == android.R.id.home) {
-            finish();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    private void initializeToolbar() {
+    public void initializeToolbar() {
         ActionBar actionBar;
         if (toolbar != null) {
             toolbar.bringToFront();
@@ -133,6 +110,16 @@ public class CountryActivity extends AppCompatActivity {
                 else actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24dp);
             }
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
