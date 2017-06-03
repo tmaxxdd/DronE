@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.czterysery.hop.drone">
+    package="com.czterysery.drone.drone">
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
@@ -9,8 +9,6 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-feature android:name="android.hardware.camera"
         android:required="true" />
-    <uses-permission-sdk-23 android:name="android.permission.CAMERA" />
-    <uses-permission-sdk-23 android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.CAMERA"/>
     <uses-permission android:name="android.permission.INTERNET" />
@@ -27,7 +25,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".SplashScreen"
+            android:name="com.czterysery.drone.drone.SplashScreen"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -37,7 +35,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name="com.czterysery.drone.drone.MainActivity"
             android:label="Project DronE"
             android:theme="@style/AppTheme" />
         <!--
@@ -51,15 +49,15 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
-        <activity android:name=".Drone.MapsActivity" />
-        <activity android:name=".AddDroneActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".More.SettingsActivity"/>
-        <activity android:name=".More.AboutActivity"/>
-        <activity android:name=".Countries.CountryActivity"
+        <activity android:name="com.czterysery.drone.drone.Drone.MapsActivity" />
+        <activity android:name="com.czterysery.drone.drone.AddDroneActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.czterysery.drone.drone.More.SettingsActivity"/>
+        <activity android:name="com.czterysery.drone.drone.More.AboutActivity"/>
+        <activity android:name="com.czterysery.drone.drone.Countries.CountryActivity"
             android:theme="@style/AppTheme"/>
-        <activity android:name=".Drone.ControlActivity"/>
-        <activity android:name=".More.ContactActivity"/>
-        <activity android:name=".ReadDroneActivity"/>
+        <activity android:name="com.czterysery.drone.drone.Drone.ControlActivity"/>
+        <activity android:name="com.czterysery.drone.drone.More.ContactActivity"/>
+        <activity android:name="com.czterysery.drone.drone.ReadDroneActivity"/>
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${applicationId}.fileprovider"

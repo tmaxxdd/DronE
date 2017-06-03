@@ -60,7 +60,7 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginTop="16dp"
-                android:text="ZS 10 Zabrze"
+                android:text=""
                 android:textColor="?android:textColorPrimary"
                 android:textSize="24sp" />
 

@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <paths xmlns:android="http://schemas.android.com/apk/res/android">
-    <external-path name="my_images" path="Android/data/com.czterysery.hop.drone/files/Pictures"/>
+    <external-path name="my_images" path="Android/data/com.czterysery.drone.drone/files/Pictures"/>
 </paths>

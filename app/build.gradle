@@ -6,14 +6,14 @@ android {
     signingConfigs {
         config {
             keyPassword 'tmax0135'
-            storeFile file('C:/Users/Tomasz Kądziołka/Desktop/Foldery/KEYSTORE/drone-key.keystore')
+            storeFile file('C:/Users/Tomasz Kądziołka/Desktop/KEYSTORE/drone-key.keystore')
             storePassword 'tmax0135'
         }
     }
     compileSdkVersion 25
     buildToolsVersion "25.0.3"
     defaultConfig {
-        applicationId "com.czterysery.hop.drone"
+        applicationId "com.czterysery.drone"
         minSdkVersion 15
         targetSdkVersion 25
         versionCode 3
@@ -38,9 +38,7 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-
-    compile files ('libs/gson-2.8.0.jar')
-
+    compile files('libs/gson-2.8.0.jar')
     //Design Dependencies
     compile 'com.android.support:mediarouter-v7:25.3.1'
     compile 'com.android.support:appcompat-v7:25.3.1'
@@ -62,37 +60,27 @@ dependencies {
     compile 'com.google.android.gms:play-services-maps:10.2.4'
     compile 'com.google.android.gms:play-services-location:10.2.4'
     compile 'com.google.android.gms:play-services-identity:10.2.4'
-
     //Image upload service
     compile 'net.gotev:uploadservice:3.2.3'
     compile 'net.gotev:uploadservice-ftp:3.2.3'
-
     //Butterknife to reduce amount of view code
     compile 'com.jakewharton:butterknife:8.5.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
-
-
     //Don't remove and keep up to date with support package version e.x. 25.3.1
     //Without this line compile throws support-annotations error!
     androidTestCompile 'com.android.support:support-annotations:25.3.1'
-
     testCompile 'junit:junit:4.12'
-
     // Android runner and rules support
     androidTestCompile 'com.android.support.test:runner:0.5'
     androidTestCompile 'com.android.support.test:rules:0.5'
-
     // Espresso support
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-
     // add this for intent mocking support
     androidTestCompile 'com.android.support.test.espresso:espresso-intents:2.2.2'
-
     // add this for webview testing support
     androidTestCompile 'com.android.support.test.espresso:espresso-web:2.2.2'
-
     compile 'com.google.firebase:firebase-core:10.2.4'
     compile 'com.google.firebase:firebase-database:10.2.4'
 }
