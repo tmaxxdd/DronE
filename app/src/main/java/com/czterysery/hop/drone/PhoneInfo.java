@@ -2,8 +2,6 @@ package com.czterysery.hop.drone;
 
 import android.app.Activity;
 import android.graphics.Point;
-import android.os.Environment;
-import android.util.DisplayMetrics;
 import android.view.Display;
 
 /**
@@ -25,14 +23,6 @@ public class PhoneInfo {
     public int getID(){
         ID = tinyDB.getInt("deviceID");
         return ID;
-    }
-
-    public boolean beersAreSynchronized(){
-        return tinyDB.getBoolean("beerSynchronizationState");
-    }
-
-    public void setBeerSynchronizationState(boolean state){
-        tinyDB.putBoolean("beerSynchronizationState", state);
     }
 
     public int getApi(){
@@ -58,14 +48,4 @@ public class PhoneInfo {
         //2 = portrait
         return activity.getResources().getConfiguration().orientation;
     }
-
-    public String getDatabaseDir(){
-        return Environment.getExternalStorageDirectory() + "/hoptimist/my_beers.js";
-    }
-
-    public String getImagesDir(){
-        return Environment.getExternalStorageDirectory() + "/hoptimist/MyImages/";
-    }
-
-
 }

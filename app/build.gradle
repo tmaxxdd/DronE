@@ -1,8 +1,8 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.jakewharton.butterknife'
-apply plugin: 'me.tatarka.retrolambda'
 
 android {
+    useLibrary 'org.apache.http.legacy'
     signingConfigs {
         config {
             keyPassword 'tmax0135'
@@ -34,6 +34,7 @@ android {
             {
                 cruncherEnabled = false
             }
+
 }
 
 dependencies {
@@ -47,17 +48,18 @@ dependencies {
     compile 'com.android.support:design:25.3.1'
     //Very important dependency allows you to use material design
     //on pre-lollipop devices
-    compile 'com.github.rey5137:material:1.2.4'
+    compile 'com.github.rey5137:material:1.2.4'//Material
     compile 'com.android.support:support-v4:25.3.1'
-    compile 'com.github.smart-fun:SmartFonts:1.0.2'
+    compile 'com.github.smart-fun:SmartFonts:1.0.2'//SmartFonts
     compile('com.mikepenz:materialdrawer:5.9.1@aar') {
         transitive = true
     }
-    compile 'com.ms-square:expandableTextView:0.1.4'
-    compile 'com.squareup.picasso:picasso:2.5.2'
-    compile 'com.github.coyarzun89:fabtransitionactivity:0.2.0'
-    compile 'com.rengwuxian.materialedittext:library:2.1.4'
-    compile 'com.github.chuross:expandable-layout:1.0.5'
+    compile 'com.ms-square:expandableTextView:0.1.4'//ExpandableText
+    compile 'com.squareup.picasso:picasso:2.5.2'//Picasso
+    compile 'com.github.coyarzun89:fabtransitionactivity:0.2.0'//FabTransition
+    compile 'com.rengwuxian.materialedittext:library:2.1.4'//EditText
+    compile 'com.github.chuross:expandable-layout:1.0.5'//ExpandableLayout
+    compile 'com.github.omadahealth:swipy:1.2.3'
     //Import services for localization and maps
     compile 'com.google.android.gms:play-services-maps:10.2.4'
     compile 'com.google.android.gms:play-services-location:10.2.4'

@@ -60,6 +60,7 @@
         <activity android:name=".Drone.ControlActivity"/>
         <activity android:name=".More.ContactActivity"/>
         <activity android:name=".ReadDroneActivity"/>
+        <activity android:name=".CheckListActivity"/>
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${applicationId}.fileprovider"

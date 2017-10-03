@@ -176,6 +176,10 @@ public class ImageWorker extends Activity{
         Picasso.with(activity).load(imageFile).fit().into(imageView);
     }
 
+    public void loadImageToImageView(int image, ImageView imageView){
+        Picasso.with(activity).load(image).fit().into(imageView);
+    }
+
     public void cropImageToImageView(String imagePath, ImageView imageView) {
         //Decoded dimensions
         int photoW = imageView.getWidth();
@@ -192,4 +196,5 @@ public class ImageWorker extends Activity{
         uploadImage(finalPath, droneImage);
         loadImageToImageView(finalPath, imageView);
     }
+
 }

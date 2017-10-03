@@ -3,6 +3,7 @@ package com.czterysery.hop.drone;
 import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 /**
  * Created by tmax0 on 30.05.2017.
@@ -39,6 +40,11 @@ public class LayoutWorker extends AppCompatActivity {
             imageViewHeight = screenHeight / 3;
         }
         return imageViewHeight;
+    }
+
+    public void toast(String message) {
+        Toast.makeText(
+                activity, message, Toast.LENGTH_SHORT).show();
     }
 
 }

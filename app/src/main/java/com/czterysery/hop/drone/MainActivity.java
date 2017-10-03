@@ -24,7 +24,6 @@ import com.czterysery.hop.drone.More.AboutActivity;
 import com.czterysery.hop.drone.More.ContactActivity;
 import com.czterysery.hop.drone.More.SettingsActivity;
 import com.github.fabtransitionactivity.SheetLayout;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -34,6 +33,7 @@ import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
+import com.omadahealth.github.swipyrefreshlayout.library.SwipyRefreshLayout;
 import com.rey.material.widget.Switch;
 
 import java.util.ArrayList;
@@ -59,6 +59,8 @@ public class MainActivity extends AppCompatActivity implements SheetLayout.OnFab
     SheetLayout sheetLayout;
     @BindView(R2.id.main_fab)
     FloatingActionButton fab;
+    @BindView(R2.id.main_refreshlayout)
+    SwipyRefreshLayout refreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +75,7 @@ public class MainActivity extends AppCompatActivity implements SheetLayout.OnFab
         initializeToolbar();
         initializeNavigationDrawer();
         ButterKnife.bind(this);
+        initializeRefreshLayout();
         //Butterknife things under bind
         sheetLayout.setFab(fab);
         sheetLayout.setFabAnimationEndListener(this);
@@ -82,7 +85,7 @@ public class MainActivity extends AppCompatActivity implements SheetLayout.OnFab
     protected void onStart() {
         super.onStart();
 
-        // Create adapter passing in the sample user data
+        // Create adapter passing data about drones from DB
         adapter = new MyDroneAdapter(this, drones);
         // Attach the adapter to the recyclerview to populate items
         recyclerView.setAdapter(adapter);
@@ -99,15 +102,19 @@ public class MainActivity extends AppCompatActivity implements SheetLayout.OnFab
         firebaseHandler = new FirebaseHandler(this);
         dronesDatabase = firebaseHandler.getDronesRef();
 
+        //TODO Divide on refresh and initialization
         dronesDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                drones.clear();//Remove old info
                 if (drones.size() == 0) {//Don't repeat drones
                     for (DataSnapshot data : dataSnapshot.getChildren()) {
                         //Add all now
                         drones.add(data.getValue(MyDrone.class));
                     }
                 }
+                adapter.notifyDataSetChanged();//Show new data
+                refreshLayout.setRefreshing(false);//Interrupt animation
             }
 
             @Override
@@ -176,6 +183,12 @@ public class MainActivity extends AppCompatActivity implements SheetLayout.OnFab
         }
     }
 
+    private void initializeRefreshLayout(){
+        refreshLayout.setOnRefreshListener(direction -> {
+            initializeFirebase();//Refresh data
+        });
+    }
+
     private void initializeNavigationDrawer() {
         //Full documentation https://github.com/mikepenz/MaterialDrawer
         new DrawerBuilder().withActivity(this).build();
@@ -187,7 +200,7 @@ public class MainActivity extends AppCompatActivity implements SheetLayout.OnFab
         PrimaryDrawerItem control = new PrimaryDrawerItem()
                 .withIdentifier(3).withName("Control").withIcon(R.drawable.ic_control_green_24dp);
         PrimaryDrawerItem statistics = new PrimaryDrawerItem()
-                .withIdentifier(4).withName("Statistics").withIcon(R.drawable.ic_chart_green_24dp);
+                .withIdentifier(4).withName("Checklist").withIcon(R.drawable.ic_done_all_green_24dp);
 
         SecondaryDrawerItem settings = new SecondaryDrawerItem()
                 .withIdentifier(7).withName("Settings").withIcon(R.drawable.ic_settings_green_24dp);
@@ -250,7 +263,7 @@ public class MainActivity extends AppCompatActivity implements SheetLayout.OnFab
                             startActivity(new Intent(this, ControlActivity.class));
                             break;
                         case 4:
-                            //startActivity(new Intent(this, StatisticsActivity.class));
+                            startActivity(new Intent(this, CheckListActivity.class));
                             break;
                         case 7:
                             startActivity(new Intent(this, SettingsActivity.class));

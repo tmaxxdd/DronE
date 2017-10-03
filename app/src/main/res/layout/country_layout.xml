@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
+    android:fitsSystemWindows="false"
     android:background="?attr/colorPrimaryDark">
 
     <android.support.design.widget.AppBarLayout
@@ -46,11 +46,16 @@
                 android:background="@android:color/black" />
 
         </android.support.design.widget.CollapsingToolbarLayout>
+    </android.support.design.widget.AppBarLayout>
+
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            android:layout_height="wrap_content">
 
             <TextView
                 android:id="@+id/country_header"
@@ -60,7 +65,7 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginTop="16dp"
-                android:text="ZS 10 Zabrze"
+                android:text=""
                 android:textColor="?android:textColorPrimary"
                 android:textSize="24sp" />
 
@@ -144,7 +149,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="16dp"
-                        android:text="Polski"
+                        android:text="Native"
                         android:textColor="?android:textColorPrimary"
                         android:textSize="20sp" />
 
@@ -173,6 +178,7 @@
                         android:layout_gravity="right|bottom"
                         android:background="@android:color/transparent"/>
 
+
                 </com.ms.square.android.expandabletextview.ExpandableTextView>
 
                 </RelativeLayout>
@@ -181,8 +187,6 @@
 
         </RelativeLayout>
 
-    </android.support.design.widget.AppBarLayout>
-
-
+        </android.support.v4.widget.NestedScrollView>
 
 </android.support.design.widget.CoordinatorLayout>

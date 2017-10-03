@@ -2,10 +2,7 @@ package com.czterysery.hop.drone;
 
 import android.app.Activity;
 import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.util.Log;
-import android.widget.Toast;
 
 import net.gotev.uploadservice.UploadNotificationConfig;
 import net.gotev.uploadservice.ftp.FTPUploadRequest;
@@ -18,20 +15,24 @@ import java.net.URL;
  * Created by tmax0 on 18.05.2017.
  */
 
-public class FtpOperator {
+class FtpOperator {
 
     private static final String TAG = "FtpOperator";
     private Activity activity;
     private String droneImage;
+    private ConnectionManager connectionManager;
+    private LayoutWorker layoutWorker;
 
     FtpOperator(Activity activty, String droneImage) {
         this.activity = activty;
         this.droneImage = droneImage;
+        connectionManager = new ConnectionManager(activity);
+        layoutWorker = new LayoutWorker(activity);
     }
 
     void uploadFTP(final Context context, String path) {
         if (checkIfFileLocalExists(path)) {
-            if (isOnline()) {
+            if (connectionManager.isOnline()) {
                 if (!checkIfFileUrlExists(droneImage))//There won't be duplicate
                 try {
                     String uploadId =
@@ -45,10 +46,10 @@ public class FtpOperator {
                     Log.e("AndroidUploadService", exc.getMessage(), exc);
                 }
             }else{
-                toast("No internet connection. Can't upload image.");
+                layoutWorker.toast("No internet connection. Can't upload image.");
             }
         }else{
-            toast("Can't find file to upload.");
+            layoutWorker.toast("Can't find file to upload.");
         }
     }
 
@@ -82,18 +83,6 @@ public class FtpOperator {
             Log.d(TAG, "URLName: " + droneImage);
             return false;
         }
-    }
-
-    private boolean isOnline() {
-        ConnectivityManager cm =
-                (ConnectivityManager) activity.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo netInfo = cm.getActiveNetworkInfo();
-        return netInfo != null && netInfo.isConnectedOrConnecting();
-    }
-
-    private void toast(String message) {
-        Toast.makeText(
-                activity, message, Toast.LENGTH_SHORT).show();
     }
 
 }

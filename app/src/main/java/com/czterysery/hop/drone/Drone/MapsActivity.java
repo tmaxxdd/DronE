@@ -1,8 +1,17 @@
 package com.czterysery.hop.drone.Drone;
 
-import android.support.v4.app.FragmentActivity;
+import android.app.Activity;
+import android.app.Dialog;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+import android.widget.TextView;
 
+import com.czterysery.hop.drone.AsyncResponse;
+import com.czterysery.hop.drone.ConnectionManager;
+import com.czterysery.hop.drone.Coordinates;
+import com.czterysery.hop.drone.Dialogs;
+import com.czterysery.hop.drone.ElevationFromGoogleMaps;
+import com.czterysery.hop.drone.LayoutWorker;
 import com.czterysery.hop.drone.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -11,9 +20,19 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
+public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, AsyncResponse {
 
     private GoogleMap mMap;
+    private LayoutWorker layoutWorker;
+    private ConnectionManager connectionManager;
+    private Activity activity;
+    private Dialog countriesDialog;
+    private LatLng poland = Coordinates.Poland;
+    private LatLng croatia = Coordinates.Croatia;
+    private LatLng slovenia = Coordinates.Slovenia;
+    private LatLng spain = Coordinates.Spain;
+    private double currentElevation; //Keep value calculated elevation
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,9 +43,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        //
-    }
+        activity = this;
 
+        //Initialize util classes
+        countriesDialog = new Dialogs(this).getSelectCountry();
+        layoutWorker = new LayoutWorker(this);
+        connectionManager = new ConnectionManager(this);
+
+    }
     /**
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.
@@ -39,11 +63,108 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-
-        // Add a marker in Sydney and move the camera
-        LatLng zs10 = new LatLng(50.334693, 18.781292);
-        mMap.addMarker(new MarkerOptions().position(zs10).title("ZS 10 Mikulczyce"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(zs10));
+        //Define map's style
         mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+
+        //Handle clicks on map. Every click will return altitude
+        mMap.setOnMapClickListener(point -> {
+            //From asyncTask will be returned result to method
+            calculateElevationForPoint(point.longitude, point.latitude);
+        });
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        showSchool();
+    }
+
+    /* This function will execute task in background to get elevation from web */
+    private void calculateElevationForPoint(double longitude, double latitude) {
+
+        //Check if is internet connection
+        if (connectionManager.isOnline()) {
+
+            //Notify user
+            layoutWorker.toast("Calculating your elevation...");
+
+            ElevationFromGoogleMaps elevationAsyncTask = new ElevationFromGoogleMaps();
+
+            //This point activity where asyncTask
+            // returns value
+            elevationAsyncTask.delegate = this;
+
+            //Put data to asyncTask
+            LatLng input = new LatLng(latitude, longitude);
+            elevationAsyncTask.execute(input);
+
+        } else {
+            //There is no internet connection
+            layoutWorker.toast("No internet connection. Cannot get elevation.");
+        }
+    }
+
+    /* Show dialog with human-readable parameters (induced from interface) */
+    @Override
+    public void showResult(Double elevation){
+        double tempElevation = currentElevation;//Needed for comparing
+
+        Dialog elevationDialog = new Dialogs(activity).getElevationDialog();
+
+        //Current elevation
+        TextView currentElevationView = (TextView) elevationDialog.findViewById(R.id.current_elevation);
+        currentElevationView.setText(String.valueOf(elevation));
+
+        //Temp elevation
+        TextView previousElevationView = (TextView) elevationDialog.findViewById(R.id.previous_elevation);
+        previousElevationView.setText(String.valueOf(tempElevation));
+
+        elevationDialog.show();
+
+        //Replace value
+        currentElevation = elevation;
+    }
+
+    //TODO Try to simplify code below
+    private void showSchool() {
+        /* Move map's pointer to school */
+
+        //Reaction for Poland
+        countriesDialog.findViewById(R.id.select_country_poland)
+                .setOnClickListener( v -> {
+                    moveCamera(poland, "ZS 10 Mikulczyce");
+                    countriesDialog.dismiss();
+                });
+
+        //Reaction for Poland
+        countriesDialog.findViewById(R.id.select_country_croatia)
+                .setOnClickListener( v -> {
+                    moveCamera(croatia, "Technicka Skola Sisak");
+                    countriesDialog.dismiss();
+                });
+
+        //Reaction for Poland
+        countriesDialog.findViewById(R.id.select_country_slovenia)
+                .setOnClickListener( v -> {
+                    moveCamera(slovenia, "Solski center Krsko-Sevnica");
+                    countriesDialog.dismiss();
+                });
+
+        //Reaction for Poland
+        countriesDialog.findViewById(R.id.select_country_spain)
+                .setOnClickListener( v -> {
+                    moveCamera(spain, "IES la FOIA");
+                    countriesDialog.dismiss();
+                });
+
+
+        countriesDialog.show();
+    }
+
+    private void moveCamera(LatLng latLng, String title){
+        mMap.addMarker(new MarkerOptions().position(latLng).title(title));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(19));
+    }
+
 }

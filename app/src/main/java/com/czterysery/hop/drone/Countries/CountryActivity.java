@@ -9,14 +9,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.czterysery.hop.drone.ImageWorker;
 import com.czterysery.hop.drone.LayoutWorker;
 import com.czterysery.hop.drone.MyThemeManager;
 import com.czterysery.hop.drone.PhoneInfo;
 import com.czterysery.hop.drone.R;
 import com.czterysery.hop.drone.R2;
 import com.ms.square.android.expandabletextview.ExpandableTextView;
-import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,7 +27,12 @@ import butterknife.ButterKnife;
  */
 
 public class CountryActivity extends AppCompatActivity {
-    MyThemeManager myThemeManager;
+    private MyThemeManager myThemeManager;
+    private ImageWorker imageWorker;
+    @BindView(R2.id.country_header)
+    TextView schoolView;
+    @BindView(R2.id.country_country)
+    TextView countryView;
     @BindView(R2.id.country_bar_layout)
     AppBarLayout appBarLayout;
     @BindView(R2.id.country_collapsing_toolbar)
@@ -38,7 +44,7 @@ public class CountryActivity extends AppCompatActivity {
     @BindView(R2.id.country_english_expandableview)
     ExpandableTextView englishTextView;
     @BindView(R2.id.country_polish_expandableview)
-    ExpandableTextView polishTextView;
+    ExpandableTextView nativeTextView;
     private PhoneInfo phoneInfo;
     private String countryName;
 
@@ -55,6 +61,7 @@ public class CountryActivity extends AppCompatActivity {
 
         phoneInfo = new PhoneInfo(this);//Returns important data about smartphone
         LayoutWorker layoutWorker = new LayoutWorker(this);
+        imageWorker = new ImageWorker(this);
         initializeToolbar();
         imageView.setMinimumHeight(
                 layoutWorker.calculateImageViewHeight(imageView));
@@ -63,21 +70,35 @@ public class CountryActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-
-        Picasso.with(this).load(R.drawable.poland_photo).fit().into(imageView);
         // IMPORTANT - call setText on the ExpandableTextView to set the text content to display
         switch (countryName){
             case "Poland":
                 englishTextView.setText(getString(R.string.poland_english_description));
+                nativeTextView.setText(getString(R.string.poland_native_description));
+                imageWorker.loadImageToImageView(R.drawable.poland_photo, imageView);
+                schoolView.setText("Zespół Szkół nr 10");
+                countryView.setText(countryName);
                 break;
             case "Croatia":
                 englishTextView.setText(getString(R.string.croatia_english_description));
+                nativeTextView.setText(getString(R.string.croatia_native_description));
+                imageWorker.loadImageToImageView(R.drawable.croatia_photo, imageView);
+                schoolView.setText("Tehnička škola Sisak");
+                countryView.setText(countryName);
                 break;
             case "Slovenia":
                 englishTextView.setText(getString(R.string.slovenia_english_description));
+                nativeTextView.setText(getString(R.string.slovenia_native_description));
+                imageWorker.loadImageToImageView(R.drawable.slovenia_photo, imageView);
+                schoolView.setText("Šolski center Krško-Sevnica");
+                countryView.setText(countryName);
                 break;
             case "Spain":
                 englishTextView.setText(getString(R.string.spain_english_description));
+                nativeTextView.setText(getString(R.string.spain_native_description));
+                imageWorker.loadImageToImageView(R.drawable.spain_photo, imageView);
+                schoolView.setText("IES la FOIA");
+                countryView.setText(countryName);
                 break;
         }
     }
@@ -90,7 +111,7 @@ public class CountryActivity extends AppCompatActivity {
 
             actionBar = getSupportActionBar();
             if (actionBar != null) {
-                actionBar.setTitle(countryName);
+                actionBar.setTitle("");
                 actionBar.setDisplayHomeAsUpEnabled(true);
                 actionBar.setDisplayShowHomeEnabled(true);
                 actionBar.setDisplayShowTitleEnabled(true);
