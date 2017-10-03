@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:fitsSystemWindows="true"
-    tools:context="com.czterysery.hop.drone.MainActivity"
+    tools:context="com.czterysery.drone.drone.MainActivity"
     android:background="?attr/colorPrimaryDark">
     
     <android.support.v7.widget.Toolbar
