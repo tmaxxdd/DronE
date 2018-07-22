@@ -80,6 +80,16 @@
         <item name="sw_trackColor">?attr/colorPrimaryDark</item>
     </style>
 
+    <style name="LightSpinner" parent="Material.Widget.Spinner.Light">
+        <item name="rd_style">@style/Material.Drawable.Ripple.Wave.Light</item>
+        <item name="spn_labelEnable">true</item>
+        <item name="spn_arrowSwitchMode">true</item>
+        <item name="spn_arrowAnimDuration">@android:integer/config_shortAnimTime</item>
+        <item name="spn_arrowInterpolator">@android:anim/decelerate_interpolator</item>
+        <item name="spn_arrowColor">@color/colorAccent</item>
+        <item name="android:popupBackground">@drawable/abc_popup_background_mtrl_mult</item>
+    </style>
+
     <style name="spinnerStyled" parent="Material.Widget.Spinner">
         <item name="rd_style">@style/Material.Drawable.Ripple.Wave</item>
         <item name="spn_labelEnable">true</item>
@@ -91,6 +101,7 @@
     </style>
 
     <style name="LightSpinnerItem" parent="Material.Drawable.Ripple.Wave">
+        <item name="android:background">?attr/colorPrimary</item>
         <item name="rd_rippleColor">@color/colorAccent</item>
         <item name="rd_rippleAnimDuration">300</item>
         <item name="rd_maskType">rectangle</item>

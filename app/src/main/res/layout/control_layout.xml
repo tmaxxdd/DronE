@@ -1,66 +1,361 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/control_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".SterowanieFragment"
-    android:background="?attr/colorPrimaryDark">
+    app:layout_behavior="@string/bottom_sheet_behavior">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/control_toolbar"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary" />
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <com.rey.material.widget.FloatingActionButton
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        style="@style/FAB_center"
-        app:fab_iconSrc="@drawable/ic_arrow_back_white_24dp"
-        android:id="@+id/view4"
-        android:layout_centerVertical="true"
-        android:layout_toLeftOf="@+id/view5"
-        android:layout_toStartOf="@+id/view5" />
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimaryDark"
+            android:orientation="vertical">
 
-    <com.rey.material.widget.FloatingActionButton
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_gravity="center_horizontal|top"
-        style="@style/FAB_center"
-        app:fab_iconSrc="@drawable/ic_arrow_upward_white_24dp"
-        android:id="@+id/view2"
-        android:layout_above="@+id/view3"
-        android:layout_centerHorizontal="true" />
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/control_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:background="?attr/colorPrimary" />
 
-    <com.rey.material.widget.FloatingActionButton
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_gravity="right|center_vertical"
-        style="@style/FAB_center"
-        app:fab_iconSrc="@drawable/ic_arrow_forward_white_24dp"
-        android:id="@+id/view3"
-        android:layout_above="@+id/view5"
-        android:layout_toRightOf="@+id/view5"
-        android:layout_toEndOf="@+id/view5" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-    <com.rey.material.widget.FloatingActionButton
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_gravity="center_horizontal|bottom"
-        style="@style/FAB_center"
-        app:fab_iconSrc="@drawable/ic_arrow_downward_white_24dp"
-        android:id="@+id/view5"
-        android:layout_below="@+id/view4"
-        android:layout_alignLeft="@+id/view2"
-        android:layout_alignStart="@+id/view2" />
+                <TextView
+                    android:id="@+id/control_params_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="Parameters"
+                    android:layout_centerHorizontal="true"
+                    android:textColor="?android:textColorPrimary" />
 
-    <com.rey.material.widget.Switch
-        style="@style/Material.Widget.Switch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="32dp"
-        android:layout_marginBottom="32dp" />
-</RelativeLayout>
+                <TextView
+                    android:id="@+id/control_ssid_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="16dp"
+                    android:text="Connected to the ssid:"
+                    android:layout_below="@id/control_params_tv"
+                    android:textColor="?android:textColorSecondary" />
+
+                <TextView
+                    android:id="@+id/control_ssid"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/control_ssid_tv"
+                    android:layout_toEndOf="@+id/control_socket_tv"
+                    android:layout_toRightOf="@+id/control_socket_tv"
+                    android:textColor="@color/colorAccent" />
+
+                <TextView
+                    android:id="@+id/control_socket_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/control_ssid_tv"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="8dp"
+                    android:text="Connected to the socket:"
+                    android:textColor="?android:textColorSecondary" />
+
+                <TextView
+                    android:id="@+id/control_socket"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/control_socket_tv"
+                    android:layout_marginLeft="8dp"
+                    android:layout_toEndOf="@id/control_socket_tv"
+                    android:layout_toRightOf="@id/control_socket_tv"
+                    android:textColor="@color/colorAccent" />
+
+                <TextView
+                    android:id="@+id/control_esp_status_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/control_socket_tv"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="8dp"
+                    android:text="ESP32 status:"
+                    android:textColor="?android:textColorSecondary" />
+
+                <TextView
+                    android:id="@+id/control_esp_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@id/control_esp_status_tv"
+                    android:layout_marginLeft="8dp"
+                    android:layout_toEndOf="@id/control_esp_status_tv"
+                    android:layout_toRightOf="@id/control_esp_status_tv"
+                    android:textColor="@color/colorAccent" />
+
+                <TextView
+                    android:id="@+id/control_drone_status_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/control_esp_status_tv"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="8dp"
+                    android:text="Drone status:"
+                    android:textColor="?android:textColorSecondary" />
+
+                <TextView
+                    android:id="@+id/control_drone_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@id/control_drone_status_tv"
+                    android:layout_marginLeft="8dp"
+                    android:layout_toEndOf="@id/control_drone_status_tv"
+                    android:layout_toRightOf="@id/control_drone_status_tv"
+                    android:textColor="@color/colorAccent" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/control_mode_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="16dp"
+                    android:text="Select flight mode"
+                    android:textColor="?android:textColorPrimary" />
+
+                <fr.ganfra.materialspinner.MaterialSpinner
+                    android:id="@+id/control_mode_spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:ms_multiline="false"
+                    android:layout_below="@id/control_mode_tv"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="16dp" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/control_controller_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="Controler"
+                    android:layout_centerHorizontal="true"
+                    android:textColor="?android:textColorPrimary" />
+
+                <TextView
+                    android:id="@+id/control_controller_roll_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/control_controller_tv"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="8dp"
+                    android:text="ROLL"
+                    android:textColor="?android:textColorSecondary" />
+
+                <com.rey.material.widget.Slider
+                    android:id="@+id/control_controller_roll_slider"
+                    style="@style/Material.Widget.Slider"
+                    android:layout_width="match_parent"
+                    android:layout_height="24dp"
+                    android:layout_below="@id/control_controller_roll_tv"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="8dp"
+                    app:sl_maxValue="2000"
+                    app:sl_minValue="1000"
+                    app:sl_value="1000" />
+
+                <TextView
+                    android:id="@+id/control_controller_pitch_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/control_controller_roll_slider"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="8dp"
+                    android:text="PITCH"
+                    android:textColor="?android:textColorSecondary" />
+
+                <com.rey.material.widget.Slider
+                    android:id="@+id/control_controller_pitch_slider"
+                    style="@style/Material.Widget.Slider"
+                    android:layout_width="match_parent"
+                    android:layout_height="24dp"
+                    android:layout_below="@id/control_controller_pitch_tv"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="8dp"
+                    app:sl_maxValue="2000"
+                    app:sl_minValue="1000"
+                    app:sl_value="1000" />
+
+                <TextView
+                    android:id="@+id/control_controller_throttle_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/control_controller_pitch_slider"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="8dp"
+                    android:text="THROTTLE"
+                    android:textColor="?android:textColorSecondary" />
+
+                <com.rey.material.widget.Slider
+                    android:id="@+id/control_controller_throttle_slider"
+                    style="@style/Material.Widget.Slider"
+                    android:layout_width="match_parent"
+                    android:layout_height="24dp"
+                    android:layout_below="@id/control_controller_throttle_tv"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="8dp"
+                    app:sl_maxValue="2000"
+                    app:sl_minValue="1000"
+                    app:sl_value="1000" />
+
+                <TextView
+                    android:id="@+id/control_controller_yaw_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/control_controller_throttle_slider"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="8dp"
+                    android:text="YAW"
+                    android:textColor="?android:textColorSecondary" />
+
+                <com.rey.material.widget.Slider
+                    android:id="@+id/control_controller_yaw_slider"
+                    style="@style/Material.Widget.Slider"
+                    android:layout_width="match_parent"
+                    android:layout_height="24dp"
+                    android:layout_below="@id/control_controller_yaw_tv"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="8dp"
+                    app:sl_maxValue="2000"
+                    app:sl_minValue="1000"
+                    app:sl_value="1000" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/control_buttons_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="8dp"
+                    android:text="Buttons"
+                    android:layout_centerHorizontal="true"
+                    android:textColor="?android:textColorPrimary" />
+
+                <com.rey.material.widget.Button
+                    android:id="@+id/control_arm_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="16dp"
+                    android:text="ARM"
+                    android:layout_below="@id/control_buttons_tv"/>
+
+                <com.rey.material.widget.Button
+                    android:id="@+id/control_logs_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="16dp"
+                    android:text="LOGS"
+                    android:layout_below="@id/control_buttons_tv"/>
+
+                <com.rey.material.widget.Button
+                    android:id="@+id/control_connect_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="16dp"
+                    android:text="CONNECT"
+                    android:layout_below="@id/control_buttons_tv"/>
+
+                <com.rey.material.widget.Button
+                    android:id="@+id/control_joystick_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:layout_below="@id/control_arm_btn"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="8dp"
+                    android:text="JOYSTICK" />
+
+                <com.rey.material.widget.Button
+                    android:id="@+id/control_serial_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="SOCKET_ON"
+                    android:textColor="@color/colorAccent"
+                    android:layout_below="@id/control_connect_btn"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="8dp" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+    </ScrollView>
+    <!-- Bottom Sheet -->
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/bottom_sheet1"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:clipToPadding="true"
+        android:background="?attr/colorPrimary"
+        android:alpha="0.7"
+        app:layout_behavior="android.support.design.widget.BottomSheetBehavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/control_console_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:layout_marginBottom="0dp"
+                android:text="Console"
+                android:textColor="?android:textColorPrimary"/>
+
+            <TextView
+                android:id="@+id/control_console"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text=""
+                android:textColor="?android:textColorPrimary"
+                android:textSize="12sp"
+                android:padding="16dp"
+                android:paddingTop="0dp"/>
+
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+</android.support.design.widget.CoordinatorLayout>

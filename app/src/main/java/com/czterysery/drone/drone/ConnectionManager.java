@@ -1,4 +1,4 @@
-package com.czterysery.hop.drone;
+package com.czterysery.drone.drone;
 
 import android.app.Activity;
 import android.content.Context;

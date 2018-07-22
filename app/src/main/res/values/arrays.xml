@@ -9,4 +9,11 @@
         <item>Spain</item>
     </string-array>
 
+    <string-array name="flight_modes_array">
+        <item>AltHold</item>
+        <item>Loiter</item>
+        <item>Stabilize</item>
+        <item>AutoReturn</item>
+    </string-array>
+
 </resources>

@@ -17,6 +17,10 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -25,17 +29,24 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="com.czterysery.drone.drone.SplashScreen"
+            android:name=".SplashScreenActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.Dark">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <receiver
+            android:name=".ConnectivityReceiver" >
+            <intent-filter>
+                <action android:name="android.net.wifi.STATE_CHANGE" />
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
         <activity
-            android:name="com.czterysery.drone.drone.MainActivity"
+            android:name=".MainActivity"
             android:label="Project DronE"
             android:theme="@style/AppTheme" />
         <!--
@@ -49,15 +60,16 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
-        <activity android:name="com.czterysery.drone.drone.Drone.MapsActivity" />
-        <activity android:name="com.czterysery.drone.drone.AddDroneActivity" android:screenOrientation="portrait"/>
-        <activity android:name="com.czterysery.drone.drone.More.SettingsActivity"/>
-        <activity android:name="com.czterysery.drone.drone.More.AboutActivity"/>
-        <activity android:name="com.czterysery.drone.drone.Countries.CountryActivity"
+        <activity android:name=".Drone.MapsActivity" />
+        <activity android:name=".AddDroneActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".More.SettingsActivity"/>
+        <activity android:name=".More.AboutActivity"/>
+        <activity android:name=".Countries.CountryActivity"
             android:theme="@style/AppTheme"/>
-        <activity android:name="com.czterysery.drone.drone.Drone.ControlActivity"/>
-        <activity android:name="com.czterysery.drone.drone.More.ContactActivity"/>
-        <activity android:name="com.czterysery.drone.drone.ReadDroneActivity"/>
+        <activity android:name=".Drone.ControlActivity"/>
+        <activity android:name=".More.ContactActivity"/>
+        <activity android:name=".Drone.CheckListActivity"/>
+        <activity android:name=".ReadDroneActivity"/>
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${applicationId}.fileprovider"

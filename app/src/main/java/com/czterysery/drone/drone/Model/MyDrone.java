@@ -1,4 +1,4 @@
-package com.czterysery.drone.drone.Models;
+package com.czterysery.drone.drone.Model;
 
 import com.google.firebase.database.IgnoreExtraProperties;
 

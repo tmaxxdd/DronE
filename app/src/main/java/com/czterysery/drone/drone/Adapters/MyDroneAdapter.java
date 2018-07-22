@@ -8,9 +8,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.czterysery.drone.drone.Models.MyDrone;
-import com.czterysery.drone.drone.R;
 import com.czterysery.drone.drone.ReadDroneActivity;
+import com.czterysery.drone.drone.R;
+import com.czterysery.drone.drone.Model.MyDrone;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;

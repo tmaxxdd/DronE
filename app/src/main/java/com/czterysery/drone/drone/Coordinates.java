@@ -1,4 +1,4 @@
-package com.czterysery.hop.drone;
+package com.czterysery.drone.drone;
 
 import com.google.android.gms.maps.model.LatLng;
 

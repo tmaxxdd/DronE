@@ -1,4 +1,4 @@
-package com.czterysery.hop.drone;
+package com.czterysery.drone.drone;
 
 /**
  * Created by tmax0 on 02.10.2017.

@@ -9,7 +9,6 @@ import android.view.MenuItem;
 
 import com.czterysery.drone.drone.MyThemeManager;
 import com.czterysery.drone.drone.R;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 

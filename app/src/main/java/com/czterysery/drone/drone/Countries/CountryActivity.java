@@ -44,7 +44,7 @@ public class CountryActivity extends AppCompatActivity {
     @BindView(R2.id.country_english_expandableview)
     ExpandableTextView englishTextView;
     @BindView(R2.id.country_polish_expandableview)
-    ExpandableTextView polishTextView;
+    ExpandableTextView nativeTextView;
     private PhoneInfo phoneInfo;
     private String countryName;
 
@@ -74,24 +74,28 @@ public class CountryActivity extends AppCompatActivity {
         switch (countryName){
             case "Poland":
                 englishTextView.setText(getString(R.string.poland_english_description));
+                nativeTextView.setText(getString(R.string.poland_native_description));
                 imageWorker.loadImageToImageView(R.drawable.poland_photo, imageView);
                 schoolView.setText("Zespół Szkół nr 10");
                 countryView.setText(countryName);
                 break;
             case "Croatia":
                 englishTextView.setText(getString(R.string.croatia_english_description));
+                nativeTextView.setText(getString(R.string.croatia_native_description));
                 imageWorker.loadImageToImageView(R.drawable.croatia_photo, imageView);
                 schoolView.setText("Tehnička škola Sisak");
                 countryView.setText(countryName);
                 break;
             case "Slovenia":
                 englishTextView.setText(getString(R.string.slovenia_english_description));
+                nativeTextView.setText(getString(R.string.slovenia_native_description));
                 imageWorker.loadImageToImageView(R.drawable.slovenia_photo, imageView);
                 schoolView.setText("Šolski center Krško-Sevnica");
                 countryView.setText(countryName);
                 break;
             case "Spain":
                 englishTextView.setText(getString(R.string.spain_english_description));
+                nativeTextView.setText(getString(R.string.spain_native_description));
                 imageWorker.loadImageToImageView(R.drawable.spain_photo, imageView);
                 schoolView.setText("IES la FOIA");
                 countryView.setText(countryName);

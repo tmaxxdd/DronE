@@ -15,11 +15,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.czterysery.drone.drone.Drone.CheckListActivity;
+import com.czterysery.drone.drone.Drone.ControlActivity;
 import com.czterysery.drone.drone.Adapters.MyDroneAdapter;
 import com.czterysery.drone.drone.Countries.CountryActivity;
-import com.czterysery.drone.drone.Drone.ControlActivity;
 import com.czterysery.drone.drone.Drone.MapsActivity;
-import com.czterysery.drone.drone.Models.MyDrone;
+import com.czterysery.drone.drone.Model.MyDrone;
 import com.czterysery.drone.drone.More.AboutActivity;
 import com.czterysery.drone.drone.More.ContactActivity;
 import com.czterysery.drone.drone.More.SettingsActivity;
